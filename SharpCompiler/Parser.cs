@@ -19,6 +19,9 @@ public class Parser
         var slash = Token("/");
         var assign = Token("=");
         var semi = Token(";");
+        var @if = Token("if");
+        var lparen = Token("(");
+        var rparen = Token(")");
 
         var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
 
@@ -30,7 +33,11 @@ public class Parser
 
         var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new Assignment(id, expr))).Bind(expr => semi.Map(_ => expr)));
 
-        StatementParser = assignment;
+        var ifStatement = @if.And(lparen.And(expression.Bind(e => rparen.And(assignment.Map<Statement>(t => new IfStatement(e, t))))));
+
+        var statement = ifStatement.Or(assignment);
+
+        StatementParser = statement;
     }
 
     public static Statement ParseAllText(string sourceText) => new Parser(sourceText).Parse();

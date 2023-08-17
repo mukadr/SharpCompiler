@@ -19,4 +19,14 @@ public class StatementTest
 
         Assert.Equal(id, assignment.Variable);
     }
+
+    [Fact]
+    public void Accepts_If_Statement()
+    {
+        var statement = ParseAllText("if (10) x = 30;");
+
+        var ifStatement = Assert.IsType<IfStatement>(statement);
+        Assert.IsType<Integer>(ifStatement.Condition);
+        Assert.IsType<Assignment>(ifStatement.TrueStatement);
+    }
 }
