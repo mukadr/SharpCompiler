@@ -18,9 +18,11 @@ public class ParserTest
     [Theory]
     [InlineData("+")]
     [InlineData("-")]
+    [InlineData("*")]
+    [InlineData("/")]
     public void Accepts_Binary_Expression(string @operator)
     {
-        var expression = ParseAllText("1" + @operator + "2" + @operator + "3");
+        var expression = ParseAllText($"1 {@operator} 2 {@operator} 3");
 
         var binary = Assert.IsType<BinaryExpression>(expression);
         var subTree = Assert.IsType<BinaryExpression>(binary.Left);
@@ -32,6 +34,26 @@ public class ParserTest
         Assert.Equal(@operator, subTree.Operator);
         Assert.Equal(2, middle.Value);
         Assert.Equal(@operator, binary.Operator);
+        Assert.Equal(3, rhs.Value);
+    }
+
+    [Theory]
+    [InlineData("+", "*")]
+    [InlineData("-", "/")]
+    public void Accepts_Binary_Expression_With_Correct_Precedence(string operator1, string operator2)
+    {
+        var expression = ParseAllText($"1 {operator1} 2 {operator2} 3");
+
+        var binary = Assert.IsType<BinaryExpression>(expression);
+        var lhs = Assert.IsType<Integer>(binary.Left);
+        var subTree = Assert.IsType<BinaryExpression>(binary.Right);
+        var middle = Assert.IsType<Integer>(subTree.Left);
+        var rhs = Assert.IsType<Integer>(subTree.Right);
+
+        Assert.Equal(1, lhs.Value);
+        Assert.Equal(operator1, binary.Operator);
+        Assert.Equal(2, middle.Value);
+        Assert.Equal(operator2, subTree.Operator);
         Assert.Equal(3, rhs.Value);
     }
 }

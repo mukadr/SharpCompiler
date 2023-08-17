@@ -13,11 +13,17 @@ public class Parser
         var number = OneOrMore(digit).Skip(Whitespace);
         var plus = Token("+");
         var minus = Token("-");
-        var @operator = plus.Or(minus);
+        var star = Token("*");
+        var slash = Token("/");
         var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
-        var binaryExpression = BinaryExpression(expression, @operator, (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        ExpressionParser = binaryExpression;
+        var mulExpression = BinaryExpression(
+            expression, star.Or(slash), (left, op, right, position) => new BinaryExpression(left, op, right));
+
+        var addExpression = BinaryExpression(
+            mulExpression, plus.Or(minus), (left, op, right, position) => new BinaryExpression(left, op, right));
+
+        ExpressionParser = addExpression;
     }
 
     public static Expression ParseAllText(string sourceText) => new Parser(sourceText).Parse();
