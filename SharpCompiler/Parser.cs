@@ -54,7 +54,7 @@ public class Parser
         StatementParser = statement;
     }
 
-    public static Statement ParseAllText(string sourceText) => new Parser(sourceText).Parse();
+    public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();
 
     private string _sourceText;
 

@@ -13,7 +13,7 @@ public class StatementTest
     [InlineData("_sharp_")]
     public void Accepts_Assignment(string id)
     {
-        var statement = ParseAllText($"{id} = 1;");
+        var statement = Parse($"{id} = 1;");
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
 
@@ -23,7 +23,7 @@ public class StatementTest
     [Fact]
     public void Accepts_If_Statement()
     {
-        var statement = ParseAllText("if (10) x = 30;");
+        var statement = Parse("if (10) x = 30;");
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
         Assert.IsType<IntegerExpression>(ifStatement.Condition);
@@ -34,7 +34,7 @@ public class StatementTest
     [Fact]
     public void Accepts_If_With_Else_Statement()
     {
-        var statement = ParseAllText("if (1 + 2) y = 1; else y = 2;");
+        var statement = Parse("if (1 + 2) y = 1; else y = 2;");
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
         Assert.IsType<BinaryExpression>(ifStatement.Condition);
@@ -45,7 +45,7 @@ public class StatementTest
     [Fact]
     public void Accepts_While_Statement()
     {
-        var statement = ParseAllText("while (1) y = 2;");
+        var statement = Parse("while (1) y = 2;");
 
         var whileStatement = Assert.IsType<WhileStatement>(statement);
         Assert.IsType<IntegerExpression>(whileStatement.Condition);
