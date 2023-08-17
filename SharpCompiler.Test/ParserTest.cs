@@ -6,7 +6,7 @@ namespace SharpCompiler.Test;
 public class ParserTest
 {
     [Fact]
-    public void Accepts_Number()
+    public void Accepts_Integer()
     {
         var expression = ParseAllText("35");
 
