@@ -8,7 +8,7 @@ public class ExpressionTest
     [Fact]
     public void Accepts_Integer()
     {
-        var statement = ParseAllText("x = 35");
+        var statement = ParseAllText("x = 35;");
 
         var assignment = Assert.IsType<Assignment>(statement);
         var integer = Assert.IsType<Integer>(assignment.Rhs);
@@ -23,7 +23,7 @@ public class ExpressionTest
     [InlineData("/")]
     public void Accepts_Binary_Expression(string @operator)
     {
-        var statement = ParseAllText($"x = 1 {@operator} 2 {@operator} 3");
+        var statement = ParseAllText($"x = 1 {@operator} 2 {@operator} 3;");
 
         var assignment = Assert.IsType<Assignment>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
@@ -44,7 +44,7 @@ public class ExpressionTest
     [InlineData("-", "/")]
     public void Accepts_Binary_Expression_With_Correct_Precedence(string operator1, string operator2)
     {
-        var statement = ParseAllText($"x = 1 {operator1} 2 {operator2} 3");
+        var statement = ParseAllText($"x = 1 {operator1} 2 {operator2} 3;");
 
         var assignment = Assert.IsType<Assignment>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);

@@ -18,6 +18,8 @@ public class Parser
         var star = Token("*");
         var slash = Token("/");
         var assign = Token("=");
+        var semi = Token(";");
+
         var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
 
         var mulExpression = BinaryExpression(
@@ -26,7 +28,7 @@ public class Parser
         var addExpression = BinaryExpression(
             mulExpression, plus.Or(minus), (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new Assignment(id, expr))));
+        var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new Assignment(id, expr))).Bind(expr => semi.Map(_ => expr)));
 
         StatementParser = assignment;
     }

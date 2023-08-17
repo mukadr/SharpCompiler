@@ -13,7 +13,7 @@ public class StatementTest
     [InlineData("_sharp_")]
     public void Accepts_Identifier(string id)
     {
-        var statement = ParseAllText($"{id} = 1");
+        var statement = ParseAllText($"{id} = 1;");
 
         var assignment = Assert.IsType<Assignment>(statement);
 
