@@ -3,7 +3,7 @@ using static SharpCompiler.Parser;
 
 namespace SharpCompiler.Test;
 
-public class ParserTest
+public class ExpressionTest
 {
     [Fact]
     public void Accepts_Integer()
