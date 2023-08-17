@@ -23,7 +23,7 @@ public class Parser
         var lparen = Token("(");
         var rparen = Token(")");
 
-        var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
+        var expression = number.Map<Expression>(n => new IntegerExpression(int.Parse(n)));
 
         var mulExpression = BinaryExpression(
             expression, star.Or(slash), (left, op, right, position) => new BinaryExpression(left, op, right));
@@ -31,7 +31,7 @@ public class Parser
         var addExpression = BinaryExpression(
             mulExpression, plus.Or(minus), (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new Assignment(id, expr))).Bind(expr => semi.Map(_ => expr)));
+        var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new AssignmentStatement(id, expr))).Bind(expr => semi.Map(_ => expr)));
 
         var ifStatement = @if.And(lparen.And(expression.Bind(e => rparen.And(assignment.Map<Statement>(t => new IfStatement(e, t))))));
 

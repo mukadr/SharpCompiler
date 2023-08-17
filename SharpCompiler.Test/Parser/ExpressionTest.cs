@@ -10,8 +10,8 @@ public class ExpressionTest
     {
         var statement = ParseAllText("x = 35;");
 
-        var assignment = Assert.IsType<Assignment>(statement);
-        var integer = Assert.IsType<Integer>(assignment.Rhs);
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
+        var integer = Assert.IsType<IntegerExpression>(assignment.Rhs);
 
         Assert.Equal(35, integer.Value);
     }
@@ -25,12 +25,12 @@ public class ExpressionTest
     {
         var statement = ParseAllText($"x = 1 {@operator} 2 {@operator} 3;");
 
-        var assignment = Assert.IsType<Assignment>(statement);
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
         var subTree = Assert.IsType<BinaryExpression>(binary.Left);
-        var lhs = Assert.IsType<Integer>(subTree.Left);
-        var middle = Assert.IsType<Integer>(subTree.Right);
-        var rhs = Assert.IsType<Integer>(binary.Right);
+        var lhs = Assert.IsType<IntegerExpression>(subTree.Left);
+        var middle = Assert.IsType<IntegerExpression>(subTree.Right);
+        var rhs = Assert.IsType<IntegerExpression>(binary.Right);
 
         Assert.Equal(1, lhs.Value);
         Assert.Equal(@operator, subTree.Operator);
@@ -46,12 +46,12 @@ public class ExpressionTest
     {
         var statement = ParseAllText($"x = 1 {operator1} 2 {operator2} 3;");
 
-        var assignment = Assert.IsType<Assignment>(statement);
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
-        var lhs = Assert.IsType<Integer>(binary.Left);
+        var lhs = Assert.IsType<IntegerExpression>(binary.Left);
         var subTree = Assert.IsType<BinaryExpression>(binary.Right);
-        var middle = Assert.IsType<Integer>(subTree.Left);
-        var rhs = Assert.IsType<Integer>(subTree.Right);
+        var middle = Assert.IsType<IntegerExpression>(subTree.Left);
+        var rhs = Assert.IsType<IntegerExpression>(subTree.Right);
 
         Assert.Equal(1, lhs.Value);
         Assert.Equal(operator1, binary.Operator);

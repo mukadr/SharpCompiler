@@ -1,10 +1,10 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public class Integer : Expression
+public class IntegerExpression : Expression
 {
     public int Value { get; }
 
-    public Integer(int value)
+    public IntegerExpression(int value)
     {
         Value = value;
     }

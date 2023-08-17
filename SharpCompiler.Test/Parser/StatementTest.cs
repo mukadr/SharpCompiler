@@ -15,7 +15,7 @@ public class StatementTest
     {
         var statement = ParseAllText($"{id} = 1;");
 
-        var assignment = Assert.IsType<Assignment>(statement);
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
 
         Assert.Equal(id, assignment.Variable);
     }
@@ -26,7 +26,7 @@ public class StatementTest
         var statement = ParseAllText("if (10) x = 30;");
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
-        Assert.IsType<Integer>(ifStatement.Condition);
-        Assert.IsType<Assignment>(ifStatement.TrueStatement);
+        Assert.IsType<IntegerExpression>(ifStatement.Condition);
+        Assert.IsType<AssignmentStatement>(ifStatement.TrueStatement);
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public class Assignment : Statement
+public class AssignmentStatement : Statement
 {
     public string Variable { get; }
 
     public Expression Rhs { get; }
 
-    public Assignment(string variable, Expression rhs)
+    public AssignmentStatement(string variable, Expression rhs)
     {
         Variable = variable;
         Rhs = rhs;
