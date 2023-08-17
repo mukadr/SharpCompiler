@@ -8,9 +8,10 @@ public class ParserTest
     [Fact]
     public void Accepts_Integer()
     {
-        var expression = ParseAllText("35");
+        var statement = ParseAllText("x = 35");
 
-        var integer = Assert.IsType<Integer>(expression);
+        var assignment = Assert.IsType<Assignment>(statement);
+        var integer = Assert.IsType<Integer>(assignment.Rhs);
 
         Assert.Equal(35, integer.Value);
     }
@@ -22,9 +23,10 @@ public class ParserTest
     [InlineData("/")]
     public void Accepts_Binary_Expression(string @operator)
     {
-        var expression = ParseAllText($"1 {@operator} 2 {@operator} 3");
+        var statement = ParseAllText($"x = 1 {@operator} 2 {@operator} 3");
 
-        var binary = Assert.IsType<BinaryExpression>(expression);
+        var assignment = Assert.IsType<Assignment>(statement);
+        var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
         var subTree = Assert.IsType<BinaryExpression>(binary.Left);
         var lhs = Assert.IsType<Integer>(subTree.Left);
         var middle = Assert.IsType<Integer>(subTree.Right);
@@ -42,9 +44,10 @@ public class ParserTest
     [InlineData("-", "/")]
     public void Accepts_Binary_Expression_With_Correct_Precedence(string operator1, string operator2)
     {
-        var expression = ParseAllText($"1 {operator1} 2 {operator2} 3");
+        var statement = ParseAllText($"x = 1 {operator1} 2 {operator2} 3");
 
-        var binary = Assert.IsType<BinaryExpression>(expression);
+        var assignment = Assert.IsType<Assignment>(statement);
+        var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
         var lhs = Assert.IsType<Integer>(binary.Left);
         var subTree = Assert.IsType<BinaryExpression>(binary.Right);
         var middle = Assert.IsType<Integer>(subTree.Left);
