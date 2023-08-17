@@ -11,8 +11,8 @@ public class Parser
     {
         var digit = Match('0', '9');
         var number = OneOrMore(digit).Skip(Whitespace);
-        var letter = Match('a', 'z').Or(Match('A', 'Z'));
-        var ident = letter.And(ZeroOrMore(letter.Or(digit))).Skip(Whitespace);
+        var letter = Match('a', 'z').Or(Match('A', 'Z')).Or(Match('_'));
+        var ident = letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)).Skip(Whitespace);
         var plus = Token("+");
         var minus = Token("-");
         var star = Token("*");
