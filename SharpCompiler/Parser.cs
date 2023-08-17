@@ -20,20 +20,21 @@ public class Parser
         var assign = Token("=");
         var semi = Token(";");
         var @if = Token("if");
+        var @else = Token("else");
         var lparen = Token("(");
         var rparen = Token(")");
 
-        var expression = number.Map<Expression>(n => new IntegerExpression(int.Parse(n)));
+        var factor = number.Map<Expression>(n => new IntegerExpression(int.Parse(n)));
 
         var mulExpression = BinaryExpression(
-            expression, star.Or(slash), (left, op, right, position) => new BinaryExpression(left, op, right));
+            factor, star.Or(slash), (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var addExpression = BinaryExpression(
+        var expression = BinaryExpression(
             mulExpression, plus.Or(minus), (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var assignment = ident.Bind(id => assign.And(addExpression.Map<Statement>(expr => new AssignmentStatement(id, expr))).Bind(expr => semi.Map(_ => expr)));
+        var assignment = ident.Bind(id => assign.And(expression.Map<Statement>(expr => new AssignmentStatement(id, expr))).Bind(expr => semi.Map(_ => expr)));
 
-        var ifStatement = @if.And(lparen.And(expression.Bind(e => rparen.And(assignment.Map<Statement>(t => new IfStatement(e, t))))));
+        var ifStatement = @if.And(lparen.And(expression.Bind(e => rparen.And(assignment.Bind(t => Optional(@else.And(assignment)).Map<Statement>(f => new IfStatement(e, t, f)))))));
 
         var statement = ifStatement.Or(assignment);
 

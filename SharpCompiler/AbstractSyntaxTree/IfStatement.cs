@@ -6,9 +6,12 @@ public class IfStatement : Statement
 
     public Statement TrueStatement { get; }
 
-    public IfStatement(Expression condition, Statement trueStatement)
+    public Statement? FalseStatement { get; }
+
+    public IfStatement(Expression condition, Statement trueStatement, Statement? falseStatement)
     {
         Condition = condition;
         TrueStatement = trueStatement;
+        FalseStatement = falseStatement;
     }
 }
