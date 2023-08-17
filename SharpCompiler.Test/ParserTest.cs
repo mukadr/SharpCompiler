@@ -15,17 +15,22 @@ public class ParserTest
         Assert.Equal(35, integer.Value);
     }
 
-    [Fact]
-    public void Accepts_Plus_Expression()
+    [Theory]
+    [InlineData("+")]
+    public void Accepts_Binary_Expression(string @operator)
     {
-        var expression = ParseAllText("1 + 2");
+        var expression = ParseAllText("1" + @operator + "2" + @operator + "3");
 
         var binary = Assert.IsType<BinaryExpression>(expression);
-        var lhs = Assert.IsType<Integer>(binary.Left);
+        var subTree = Assert.IsType<BinaryExpression>(binary.Left);
+        var lhs = Assert.IsType<Integer>(subTree.Left);
+        var middle = Assert.IsType<Integer>(subTree.Right);
         var rhs = Assert.IsType<Integer>(binary.Right);
 
         Assert.Equal(1, lhs.Value);
-        Assert.Equal("+", binary.Operator);
-        Assert.Equal(2, rhs.Value);
+        Assert.Equal(@operator, subTree.Operator);
+        Assert.Equal(2, middle.Value);
+        Assert.Equal(@operator, binary.Operator);
+        Assert.Equal(3, rhs.Value);
     }
 }
