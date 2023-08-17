@@ -11,7 +11,7 @@ public class StatementTest
     [InlineData("alpha")]
     [InlineData("beta120")]
     [InlineData("_sharp_")]
-    public void Accepts_Identifier(string id)
+    public void Accepts_Assignment(string id)
     {
         var statement = ParseAllText($"{id} = 1;");
 
