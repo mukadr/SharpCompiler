@@ -10,9 +10,12 @@ public class Parser
     static Parser()
     {
         var digit = Match('0', '9');
-        var number = OneOrMore(digit);
+        var number = OneOrMore(digit).Skip(Whitespace);
+        var plus = Token("+");
+        var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
+        var binaryExpression = BinaryExpression(expression, plus, (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        ExpressionParser = number.Map<Expression>(n => new Integer(int.Parse(n)));
+        ExpressionParser = binaryExpression;
     }
 
     public static Expression ParseAllText(string sourceText) => new Parser(sourceText).Parse();
