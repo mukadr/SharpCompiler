@@ -12,7 +12,7 @@ public class Parser
         var digit = Match('0', '9');
         var number = OneOrMore(digit);
 
-        ExpressionParser = number.Map(n => new Expression(n));
+        ExpressionParser = number.Map<Expression>(n => new Integer(int.Parse(n)));
     }
 
     public static Expression ParseAllText(string sourceText) => new Parser(sourceText).Parse();

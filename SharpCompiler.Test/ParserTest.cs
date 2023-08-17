@@ -1,3 +1,4 @@
+using SharpCompiler.AbstractSyntaxTree;
 using static SharpCompiler.Parser;
 
 namespace SharpCompiler.Test;
@@ -9,6 +10,8 @@ public class ParserTest
     {
         var expression = ParseAllText("35");
 
-        Assert.Equal("35", expression.Value);
+        var integer = Assert.IsType<Integer>(expression);
+
+        Assert.Equal(35, integer.Value);
     }
 }
