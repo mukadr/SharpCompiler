@@ -12,8 +12,10 @@ public class Parser
         var digit = Match('0', '9');
         var number = OneOrMore(digit).Skip(Whitespace);
         var plus = Token("+");
+        var minus = Token("-");
+        var @operator = plus.Or(minus);
         var expression = number.Map<Expression>(n => new Integer(int.Parse(n)));
-        var binaryExpression = BinaryExpression(expression, plus, (left, op, right, position) => new BinaryExpression(left, op, right));
+        var binaryExpression = BinaryExpression(expression, @operator, (left, op, right, position) => new BinaryExpression(left, op, right));
 
         ExpressionParser = binaryExpression;
     }

@@ -17,6 +17,7 @@ public class ParserTest
 
     [Theory]
     [InlineData("+")]
+    [InlineData("-")]
     public void Accepts_Binary_Expression(string @operator)
     {
         var expression = ParseAllText("1" + @operator + "2" + @operator + "3");
