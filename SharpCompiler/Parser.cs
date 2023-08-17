@@ -10,9 +10,10 @@ public class Parser
     static Parser()
     {
         var digit = Match('0', '9');
-        var number = OneOrMore(digit).Skip(Whitespace);
         var letter = Match('a', 'z').Or(Match('A', 'Z')).Or(Match('_'));
-        var ident = letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)).Skip(Whitespace);
+
+        var number = Token(OneOrMore(digit));
+        var ident = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
         var plus = Token("+");
         var minus = Token("-");
         var star = Token("*");
@@ -25,7 +26,7 @@ public class Parser
         var lparen = Token("(");
         var rparen = Token(")");
 
-        var factor = number.Map<Expression>(n => new IntegerExpression(int.Parse(n)));
+        var factor = number.Map<Expression>(n => new IntegerExpression(int.Parse(n.Value)));
 
         var mulExpression = BinaryExpression(
             factor,
@@ -39,7 +40,7 @@ public class Parser
 
         var assignment = ident.Bind(id =>
             assign.And(expression.Map<Statement>(expr =>
-                new AssignmentStatement(id, expr))).Bind(expr => semi.Map(_ => expr)));
+                new AssignmentStatement(id.Value, expr))).Bind(expr => semi.Map(_ => expr)));
 
         var ifStatement = @if.And(lparen.And(expression.Bind(e =>
             rparen.And(assignment.Bind(t =>
