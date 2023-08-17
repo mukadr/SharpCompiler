@@ -21,6 +21,7 @@ public class Parser
         var semi = Token(";");
         var @if = Token("if");
         var @else = Token("else");
+        var @while = Token("while");
         var lparen = Token("(");
         var rparen = Token(")");
 
@@ -44,7 +45,10 @@ public class Parser
             rparen.And(assignment.Bind(t =>
                 Optional(@else.And(assignment)).Map<Statement>(f => new IfStatement(e, t, f)))))));
 
-        var statement = ifStatement.Or(assignment);
+        var whileStatement = @while.And(lparen.And(expression.Bind(e =>
+            rparen.And(assignment.Map<Statement>(s => new WhileStatement(e, s))))));
+
+        var statement = assignment.Or(ifStatement).Or(whileStatement);
 
         StatementParser = statement;
     }

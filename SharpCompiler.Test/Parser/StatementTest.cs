@@ -41,4 +41,14 @@ public class StatementTest
         Assert.IsType<AssignmentStatement>(ifStatement.TrueStatement);
         Assert.IsType<AssignmentStatement>(ifStatement.FalseStatement);
     }
+
+    [Fact]
+    public void Accepts_While_Statement()
+    {
+        var statement = ParseAllText("while (1) y = 2;");
+
+        var whileStatement = Assert.IsType<WhileStatement>(statement);
+        Assert.IsType<IntegerExpression>(whileStatement.Condition);
+        Assert.IsType<AssignmentStatement>(whileStatement.Statement);
+    }
 }
