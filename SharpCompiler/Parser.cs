@@ -62,7 +62,7 @@ public class Parser
 
         statement.Attach(funcStatement.Or(assignmentStatement).Or(ifStatement).Or(whileStatement));
 
-        StatementParser = statement;
+        StatementParser = Optional(Whitespace).And(statement);
     }
 
     public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();

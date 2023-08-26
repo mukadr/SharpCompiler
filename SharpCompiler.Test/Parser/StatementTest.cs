@@ -77,4 +77,19 @@ public class StatementTest
         Assert.Equal("x", xAssignment.Variable);
         Assert.Equal("y", yAssignment.Variable);
     }
+
+    [Fact]
+    public void Accepts_Func_With_Statements_Two()
+    {
+        var statement = Parse(@"
+            func sample() {
+                x = 0;
+                if (1) x = 2; else x = 1;
+                while (2) x = 0;
+            }");
+
+        var funcStatement = Assert.IsType<FuncStatement>(statement);
+
+        Assert.Equal(3, funcStatement.Children.Count);
+    }
 }
