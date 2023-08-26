@@ -51,4 +51,13 @@ public class StatementTest
         Assert.IsType<IntegerExpression>(whileStatement.Condition);
         Assert.IsType<AssignmentStatement>(whileStatement.Statement);
     }
+
+    [Fact]
+    public void Accepts_Empty_Func()
+    {
+        var statement = Parse("func empty() {}");
+
+        var funcStatement = Assert.IsType<FuncStatement>(statement);
+        Assert.Equal("empty", funcStatement.Name);
+    }
 }

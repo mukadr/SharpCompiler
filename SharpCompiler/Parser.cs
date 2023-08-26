@@ -1,5 +1,6 @@
 ﻿using static ParseSharp.Parser;
 using SharpCompiler.AbstractSyntaxTree;
+using System.Collections.Generic;
 
 namespace SharpCompiler;
 
@@ -20,9 +21,12 @@ public class Parser
         var slash = Token("/");
         var assign = Token("=");
         var semi = Token(";");
+        var func = Token("func");
         var @if = Token("if");
         var @else = Token("else");
         var @while = Token("while");
+        var lbrace = Token("{");
+        var rbrace = Token("}");
         var lparen = Token("(");
         var rparen = Token(")");
 
@@ -38,18 +42,22 @@ public class Parser
             plus.Or(minus),
             (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var assignment = ident.Bind(id =>
+        var assignmentStatement = ident.Bind(id =>
             assign.And(expression.Map<Statement>(expr =>
                 new AssignmentStatement(id.Value, expr))).Bind(expr => semi.Map(_ => expr)));
 
         var ifStatement = @if.And(lparen.And(expression.Bind(e =>
-            rparen.And(assignment.Bind(t =>
-                Optional(@else.And(assignment)).Map<Statement>(f => new IfStatement(e, t, f)))))));
+            rparen.And(assignmentStatement.Bind(t =>
+                Optional(@else.And(assignmentStatement)).Map<Statement>(f => new IfStatement(e, t, f)))))));
 
         var whileStatement = @while.And(lparen.And(expression.Bind(e =>
-            rparen.And(assignment.Map<Statement>(s => new WhileStatement(e, s))))));
+            rparen.And(assignmentStatement.Map<Statement>(s => new WhileStatement(e, s))))));
 
-        var statement = assignment.Or(ifStatement).Or(whileStatement);
+        var funcStatement = func.And(ident.Bind(name =>
+            lparen.And(rparen).And(lbrace).And(rbrace).Map<Statement>(_ =>
+                new FuncStatement(name.Value, new List<Statement>()))));
+
+        var statement = funcStatement.Or(assignmentStatement).Or(ifStatement).Or(whileStatement);
 
         StatementParser = statement;
     }
