@@ -42,6 +42,8 @@ public class Parser
             plus.Or(minus),
             (left, op, right, position) => new BinaryExpression(left, op, right));
 
+        var statement = Forward<Statement>();
+
         var assignmentStatement = ident.Bind(id =>
             assign.And(expression.Map<Statement>(expr =>
                 new AssignmentStatement(id.Value, expr))).Bind(expr => semi.Map(_ => expr)));
@@ -54,10 +56,11 @@ public class Parser
             rparen.And(assignmentStatement.Map<Statement>(s => new WhileStatement(e, s))))));
 
         var funcStatement = func.And(ident.Bind(name =>
-            lparen.And(rparen).And(lbrace).And(rbrace).Map<Statement>(_ =>
-                new FuncStatement(name.Value, new List<Statement>()))));
+            lparen.And(rparen).And(lbrace.Bind(_ =>
+                ZeroOrMore(statement).Bind(children =>
+                    rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
 
-        var statement = funcStatement.Or(assignmentStatement).Or(ifStatement).Or(whileStatement);
+        statement.Attach(funcStatement.Or(assignmentStatement).Or(ifStatement).Or(whileStatement));
 
         StatementParser = statement;
     }

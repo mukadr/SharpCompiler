@@ -60,4 +60,21 @@ public class StatementTest
         var funcStatement = Assert.IsType<FuncStatement>(statement);
         Assert.Equal("empty", funcStatement.Name);
     }
+
+    [Fact]
+    public void Accepts_Func_With_Statements()
+    {
+        var statement = Parse("func empty() { x = 1; y = 2; }");
+
+        var funcStatement = Assert.IsType<FuncStatement>(statement);
+
+        Assert.Equal("empty", funcStatement.Name);
+        Assert.Equal(2, funcStatement.Children.Count);
+
+        var xAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[0]);
+        var yAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[1]);
+
+        Assert.Equal("x", xAssignment.Variable);
+        Assert.Equal("y", yAssignment.Variable);
+    }
 }
