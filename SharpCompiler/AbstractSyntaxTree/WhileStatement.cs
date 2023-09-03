@@ -11,4 +11,9 @@ public class WhileStatement : Statement
         Condition = condition;
         Statement = statement;
     }
+
+    public override void Accept(IAstVisitor visitor)
+    {
+        visitor.VisitWhileStatement(this);
+    }
 }

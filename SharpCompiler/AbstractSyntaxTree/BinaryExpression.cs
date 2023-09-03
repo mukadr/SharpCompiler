@@ -14,4 +14,9 @@ public class BinaryExpression : Expression
         Operator = @operator;
         Right = right;
     }
+
+    public override void Accept(IAstVisitor visitor)
+    {
+        visitor.VisitBinaryExpression(this);
+    }
 }

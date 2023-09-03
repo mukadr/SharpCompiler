@@ -11,4 +11,9 @@ public class AssignmentStatement : Statement
         Variable = variable;
         Rhs = rhs;
     }
+
+    public override void Accept(IAstVisitor visitor)
+    {
+        visitor.VisitAssignmentStatement(this);
+    }
 }

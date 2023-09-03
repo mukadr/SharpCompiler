@@ -1,4 +1,4 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public abstract class Statement
+public abstract class Statement : Ast
 { }

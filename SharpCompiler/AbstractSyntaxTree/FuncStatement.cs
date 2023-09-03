@@ -13,5 +13,10 @@ namespace SharpCompiler.AbstractSyntaxTree
             Name = name;
             Children = children;
         }
+
+        public override void Accept(IAstVisitor visitor)
+        {
+            visitor.VisitFuncStatement(this);
+        }
     }
 }

@@ -8,4 +8,9 @@ public class IntegerExpression : Expression
     {
         Value = value;
     }
+
+    public override void Accept(IAstVisitor visitor)
+    {
+        visitor.VisitIntegerExpression(this);
+    }
 }

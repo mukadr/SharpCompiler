@@ -14,4 +14,9 @@ public class IfStatement : Statement
         TrueStatement = trueStatement;
         FalseStatement = falseStatement;
     }
+
+    public override void Accept(IAstVisitor visitor)
+    {
+        visitor.VisitIfStatement(this);
+    }
 }
