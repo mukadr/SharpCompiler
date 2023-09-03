@@ -7,6 +7,7 @@ public class StringExpression : Expression
     public StringExpression(string value)
     {
         Value = value;
+        Type = Type.String;
     }
 
     public override void Accept(IAstVisitor visitor)

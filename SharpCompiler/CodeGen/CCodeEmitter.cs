@@ -72,7 +72,8 @@ public class CCodeEmitter : IAstVisitor
 
     public void VisitFuncStatement(FuncStatement funcStatement)
     {
-        Emit("void ");
+        Emit(funcStatement.ReturnType.ToCType());
+        Emit(" ");
         Emit(funcStatement.Name);
         EmitLine("() {");
 

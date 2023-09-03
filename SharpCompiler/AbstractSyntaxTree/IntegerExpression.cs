@@ -7,6 +7,7 @@ public class IntegerExpression : Expression
     public IntegerExpression(int value)
     {
         Value = value;
+        Type = Type.Integer;
     }
 
     public override void Accept(IAstVisitor visitor)
