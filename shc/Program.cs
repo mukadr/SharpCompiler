@@ -24,7 +24,7 @@ var gcc = new Process
     StartInfo = new ProcessStartInfo
     {
         FileName = "g++.exe",
-        Arguments = $"{cppCodeFileName} -o {exeFileName}",
+        Arguments = $"{cppCodeFileName} -o {exeFileName} -Wall -O2",
         CreateNoWindow = true,
         RedirectStandardError = true
     }
