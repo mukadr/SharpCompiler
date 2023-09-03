@@ -5,7 +5,7 @@ namespace SharpCompiler;
 
 public class Parser
 {
-    private static ParseSharp.Parser<Statement> StatementParser;
+    private static readonly ParseSharp.Parser<Statement> StatementParser;
 
     static Parser()
     {
@@ -66,7 +66,7 @@ public class Parser
 
     public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();
 
-    private string _sourceText;
+    private readonly string _sourceText;
 
     public Parser(string sourceText)
     {
