@@ -16,6 +16,17 @@ public class ExpressionTest
         Assert.Equal(35, integer.Value);
     }
 
+    [Fact]
+    public void Accepts_String()
+    {
+        var statement = Parse("x = \"Hello World!\";");
+
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
+        var @string = Assert.IsType<StringExpression>(assignment.Rhs);
+
+        Assert.Equal("Hello World!", @string.Value);
+    }
+
     [Theory]
     [InlineData("+")]
     [InlineData("-")]

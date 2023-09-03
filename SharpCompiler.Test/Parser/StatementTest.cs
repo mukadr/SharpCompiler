@@ -21,6 +21,17 @@ public class StatementTest
     }
 
     [Fact]
+    public void Accepts_Print_Statement()
+    {
+        var statement = Parse("print \"Hello World!\";");
+
+        var printStatement = Assert.IsType<PrintStatement>(statement);
+        var stringExpression = Assert.IsType<StringExpression>(printStatement.Expression);
+
+        Assert.Equal("Hello World!", stringExpression.Value);
+    }
+
+    [Fact]
     public void Accepts_If_Statement()
     {
         var statement = Parse("if (10) x = 30;");

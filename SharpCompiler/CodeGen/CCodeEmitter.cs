@@ -43,7 +43,6 @@ public class CCodeEmitter : IAstVisitor
     public void VisitAssignmentStatement(AssignmentStatement assignmentStatement)
     {
         EmitIndentation();
-
         Emit(assignmentStatement.Variable);
         Emit(" = ");
 
@@ -52,19 +51,14 @@ public class CCodeEmitter : IAstVisitor
         EmitLine(";");
     }
 
-    public void VisitBinaryExpression(BinaryExpression binaryExpression)
+    public void VisitPrintStatement(PrintStatement printStatement)
     {
-        Emit("(");
+        EmitIndentation();
+        Emit("printf(\"%s\\n\", ");
 
-        binaryExpression.Left.Accept(this);
+        printStatement.Expression.Accept(this);
 
-        Emit(" ");
-        Emit(binaryExpression.Operator);
-        Emit(" ");
-
-        binaryExpression.Right.Accept(this);
-
-        Emit(")");
+        EmitLine(");");
     }
 
     public void VisitFuncStatement(FuncStatement funcStatement)
@@ -110,11 +104,6 @@ public class CCodeEmitter : IAstVisitor
         EmitLine("}");
     }
 
-    public void VisitIntegerExpression(IntegerExpression integerExpression)
-    {
-        Emit(integerExpression.Value.ToString());
-    }
-
     public void VisitWhileStatement(WhileStatement whileStatement)
     {
         EmitIndentation();
@@ -130,5 +119,32 @@ public class CCodeEmitter : IAstVisitor
 
         EmitIndentation();
         EmitLine("}");
+    }
+
+    public void VisitBinaryExpression(BinaryExpression binaryExpression)
+    {
+        Emit("(");
+
+        binaryExpression.Left.Accept(this);
+
+        Emit(" ");
+        Emit(binaryExpression.Operator);
+        Emit(" ");
+
+        binaryExpression.Right.Accept(this);
+
+        Emit(")");
+    }
+
+    public void VisitIntegerExpression(IntegerExpression integerExpression)
+    {
+        Emit(integerExpression.Value.ToString());
+    }
+
+    public void VisitStringExpression(StringExpression stringExpression)
+    {
+        Emit("\"");
+        Emit(stringExpression.Value);
+        Emit("\"");
     }
 }

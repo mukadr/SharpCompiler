@@ -13,7 +13,9 @@ public class Parser
         var letter = Match('a', 'z').Or(Match('A', 'Z')).Or(Match('_'));
 
         var number = Token(OneOrMore(digit));
-        var ident = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
+        var identifier = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
+        var @string = Token(Match('"').And(Until(Match('"')).Map(value => value.Prefix)));
+        var print = Token("print");
         var plus = Token("+");
         var minus = Token("-");
         var star = Token("*");
@@ -29,7 +31,11 @@ public class Parser
         var lparen = Token("(");
         var rparen = Token(")");
 
-        var factor = number.Map<Expression>(n => new IntegerExpression(int.Parse(n.Value)));
+        var integerExpression = number.Map<Expression>(n => new IntegerExpression(int.Parse(n.Value)));
+
+        var stringExpression = @string.Map<Expression>(s => new StringExpression(s.Value));
+
+        var factor = integerExpression.Or(stringExpression);
 
         var mulExpression = BinaryExpression(
             factor,
@@ -43,7 +49,9 @@ public class Parser
 
         var statement = Forward<Statement>();
 
-        var assignmentStatement = ident.Bind(id =>
+        var printStatement = print.And(expression).Bind(e => semi.Map<Statement>(_ => new PrintStatement(e)));
+
+        var assignmentStatement = identifier.Bind(id =>
             assign.And(expression.Map<Statement>(expr =>
                 new AssignmentStatement(id.Value, expr))).Bind(expr => semi.Map(_ => expr)));
 
@@ -54,12 +62,17 @@ public class Parser
         var whileStatement = @while.And(lparen.And(expression.Bind(e =>
             rparen.And(statement.Map<Statement>(s => new WhileStatement(e, s))))));
 
-        var funcStatement = func.And(ident.Bind(name =>
+        var funcStatement = func.And(identifier.Bind(name =>
             lparen.And(rparen).And(lbrace.Bind(_ =>
                 ZeroOrMore(statement).Bind(children =>
                     rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
 
-        statement.Attach(funcStatement.Or(assignmentStatement).Or(ifStatement).Or(whileStatement));
+        statement.Attach(
+            printStatement
+            .Or(funcStatement)
+            .Or(assignmentStatement)
+            .Or(ifStatement)
+            .Or(whileStatement));
 
         StatementParser = Optional(Whitespace).And(statement);
     }
