@@ -11,11 +11,13 @@ if (args.Length < 1)
 var cCodeFileName = Path.ChangeExtension(args[0], ".c");
 var exeFileName = Path.ChangeExtension(args[0], ".exe");
 
-var emitter = new SharpCompiler.CodeGen.CCodeEmitter(new StreamWriter(cCodeFileName));
-
 var program = SharpCompiler.Parser.Parse(File.ReadAllText(args[0]));
 
-emitter.Generate(program);
+using (var writter = new StreamWriter(cCodeFileName))
+{
+    var emitter = new SharpCompiler.CodeGen.CCodeEmitter(writter);
+    emitter.Generate(program);
+}
 
 var gcc = new Process
 {
