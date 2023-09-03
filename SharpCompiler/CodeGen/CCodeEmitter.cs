@@ -21,9 +21,7 @@ public class CCodeEmitter : IAstVisitor
         EmitLine("#include <stdlib.h>");
         EmitLine("#include <string.h>");
 
-        program.Accept(this);
-
-        return Writer;
+        return Emit(program);
     }
 
     public TextWriter Emit(Ast program)
