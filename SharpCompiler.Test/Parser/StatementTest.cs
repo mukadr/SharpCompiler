@@ -66,7 +66,7 @@ public class StatementTest
     [Fact]
     public void Accepts_Empty_Func()
     {
-        var statement = Parse("func empty() {}");
+        var statement = Parse("void empty() {}");
 
         var funcStatement = Assert.IsType<FuncStatement>(statement);
         Assert.Equal("empty", funcStatement.Name);
@@ -75,7 +75,7 @@ public class StatementTest
     [Fact]
     public void Accepts_Func_With_Statements()
     {
-        var statement = Parse("func empty() { x = 1; y = 2; }");
+        var statement = Parse("void empty() { x = 1; y = 2; }");
 
         var funcStatement = Assert.IsType<FuncStatement>(statement);
 
@@ -93,7 +93,7 @@ public class StatementTest
     public void Accepts_Func_With_Statements_Two()
     {
         var statement = Parse(@"
-            func sample() {
+            void sample() {
                 x = 0;
                 if (1) x = 2; else x = 1;
                 while (2) x = 0;

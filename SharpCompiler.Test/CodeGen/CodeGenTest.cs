@@ -74,6 +74,6 @@ public class CodeGenTest
     }
 }
 ",
-            Emit("func main() { x = 1; while (2) if (3) x = 4; else x = 5; }"));
+            Emit("void main() { x = 1; while (2) if (3) x = 4; else x = 5; }"));
     }
 }

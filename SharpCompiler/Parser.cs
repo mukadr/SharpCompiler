@@ -22,7 +22,7 @@ public class Parser
         var slash = Token("/");
         var assign = Token("=");
         var semi = Token(";");
-        var func = Token("func");
+        var @void = Token("void");
         var @if = Token("if");
         var @else = Token("else");
         var @while = Token("while");
@@ -62,7 +62,7 @@ public class Parser
         var whileStatement = @while.And(lparen.And(expression.Bind(e =>
             rparen.And(statement.Map<Statement>(s => new WhileStatement(e, s))))));
 
-        var funcStatement = func.And(identifier.Bind(name =>
+        var funcStatement = @void.And(identifier.Bind(name =>
             lparen.And(rparen).And(lbrace.Bind(_ =>
                 ZeroOrMore(statement).Bind(children =>
                     rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
