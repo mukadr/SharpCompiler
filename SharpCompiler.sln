@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParseSharp", "ParseSharp\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpCompiler.Test", "SharpCompiler.Test\SharpCompiler.Test.csproj", "{59240640-0045-47A4-96C8-96E1C8CF3B8D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shc", "shc\shc.csproj", "{A5A39A64-0A36-440A-90C6-5890025871A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{59240640-0045-47A4-96C8-96E1C8CF3B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59240640-0045-47A4-96C8-96E1C8CF3B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59240640-0045-47A4-96C8-96E1C8CF3B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5A39A64-0A36-440A-90C6-5890025871A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A39A64-0A36-440A-90C6-5890025871A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A39A64-0A36-440A-90C6-5890025871A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A39A64-0A36-440A-90C6-5890025871A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
