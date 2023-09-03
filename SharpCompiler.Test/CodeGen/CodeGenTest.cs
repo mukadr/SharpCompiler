@@ -5,11 +5,11 @@ namespace SharpCompiler.Test;
 
 public class CodeGenTest
 {
-    private CCodeEmitter Emitter { get; }
+    private CppCodeEmitter Emitter { get; }
 
     public CodeGenTest()
     {
-        Emitter = new CCodeEmitter(new StringWriter());
+        Emitter = new CppCodeEmitter(new StringWriter());
     }
 
     private string Emit(string program)
@@ -63,7 +63,7 @@ public class CodeGenTest
     public void Generates_Func_Statement()
     {
         Assert.Equal(
-            @"void main() {
+            @"int main() {
     x = 1;
     while (2) {
         if (3) {

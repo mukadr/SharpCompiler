@@ -24,14 +24,14 @@ public class Type
         Base = baseType;
     }
 
-    public string ToCType()
+    public string ToCppType()
     {
         return Base switch
         {
             BaseType.Void => "void",
             BaseType.Integer => "int",
-            BaseType.String => "char *",
-            _ => throw new Exception("Unknown C type.")
+            BaseType.String => "std::string",
+            _ => throw new Exception("Unknown C++ type.")
         };
     }
 }

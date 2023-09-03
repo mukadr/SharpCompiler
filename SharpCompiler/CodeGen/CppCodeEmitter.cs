@@ -4,22 +4,20 @@ using System.IO;
 
 namespace SharpCompiler.CodeGen;
 
-public class CCodeEmitter : IAstVisitor
+public class CppCodeEmitter : IAstVisitor
 {
     private TextWriter Writer { get; set; }
 
     private int _indentation = 0;
 
-    public CCodeEmitter(TextWriter? writer = null)
+    public CppCodeEmitter(TextWriter? writer = null)
     {
         Writer = writer ?? Console.Out;
     }
 
     public TextWriter Compile(Ast program)
     {
-        EmitLine("#include <stdio.h>");
-        EmitLine("#include <stdlib.h>");
-        EmitLine("#include <string.h>");
+        EmitLine("#include <iostream>");
 
         return Emit(program);
     }
@@ -63,16 +61,18 @@ public class CCodeEmitter : IAstVisitor
     public void VisitPrintStatement(PrintStatement printStatement)
     {
         EmitIndentation();
-        Emit("printf(\"%s\\n\", ");
+        Emit("std::cout << (");
 
         printStatement.Expression.Accept(this);
 
-        EmitLine(");");
+        EmitLine(") << std::endl;");
     }
 
     public void VisitFuncStatement(FuncStatement funcStatement)
     {
-        Emit(funcStatement.ReturnType.ToCType());
+        var returnType = funcStatement.Name == "main" ? "int" : funcStatement.ReturnType.ToCppType();
+
+        Emit(returnType);
         Emit(" ");
         Emit(funcStatement.Name);
         EmitLine("() {");

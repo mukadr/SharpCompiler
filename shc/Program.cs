@@ -8,14 +8,14 @@ if (args.Length < 1)
     return;
 }
 
-var cCodeFileName = Path.ChangeExtension(args[0], ".c");
+var cppCodeFileName = Path.ChangeExtension(args[0], ".cpp");
 var exeFileName = Path.ChangeExtension(args[0], ".exe");
 
 var program = SharpCompiler.Parser.Parse(File.ReadAllText(args[0]));
 
-using (var writter = new StreamWriter(cCodeFileName))
+using (var writter = new StreamWriter(cppCodeFileName))
 {
-    var emitter = new SharpCompiler.CodeGen.CCodeEmitter(writter);
+    var emitter = new SharpCompiler.CodeGen.CppCodeEmitter(writter);
     emitter.Compile(program);
 }
 
@@ -23,8 +23,8 @@ var gcc = new Process
 {
     StartInfo = new ProcessStartInfo
     {
-        FileName = "gcc.exe",
-        Arguments = $"{cCodeFileName} -o {exeFileName}",
+        FileName = "g++.exe",
+        Arguments = $"{cppCodeFileName} -o {exeFileName}",
         CreateNoWindow = true,
         RedirectStandardError = true
     }
