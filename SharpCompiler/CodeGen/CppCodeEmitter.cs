@@ -4,7 +4,7 @@ using System.IO;
 
 namespace SharpCompiler.CodeGen;
 
-public class CppCodeEmitter : IAstVisitor
+public class CppCodeEmitter : INodeVisitor
 {
     private TextWriter Writer { get; set; }
 
@@ -15,14 +15,14 @@ public class CppCodeEmitter : IAstVisitor
         Writer = writer ?? Console.Out;
     }
 
-    public TextWriter Compile(Ast program)
+    public TextWriter Compile(Node program)
     {
         EmitLine("#include <iostream>");
 
         return Emit(program);
     }
 
-    public TextWriter Emit(Ast program)
+    public TextWriter Emit(Node program)
     {
         program.Accept(this);
 

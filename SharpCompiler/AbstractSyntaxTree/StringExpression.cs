@@ -10,7 +10,7 @@ public class StringExpression : Expression
         Type = Type.String;
     }
 
-    public override void Accept(IAstVisitor visitor)
+    public override void Accept(INodeVisitor visitor)
     {
         visitor.VisitStringExpression(this);
     }

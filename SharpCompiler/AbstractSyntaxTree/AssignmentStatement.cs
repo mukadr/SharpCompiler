@@ -12,7 +12,7 @@ public class AssignmentStatement : Statement
         Rhs = rhs;
     }
 
-    public override void Accept(IAstVisitor visitor)
+    public override void Accept(INodeVisitor visitor)
     {
         visitor.VisitAssignmentStatement(this);
     }

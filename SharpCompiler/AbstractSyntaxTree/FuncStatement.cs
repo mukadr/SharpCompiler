@@ -17,7 +17,7 @@ namespace SharpCompiler.AbstractSyntaxTree
             Children = children;
         }
 
-        public override void Accept(IAstVisitor visitor)
+        public override void Accept(INodeVisitor visitor)
         {
             visitor.VisitFuncStatement(this);
         }

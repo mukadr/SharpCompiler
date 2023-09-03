@@ -15,7 +15,7 @@ public class BinaryExpression : Expression
         Right = right;
     }
 
-    public override void Accept(IAstVisitor visitor)
+    public override void Accept(INodeVisitor visitor)
     {
         visitor.VisitBinaryExpression(this);
     }

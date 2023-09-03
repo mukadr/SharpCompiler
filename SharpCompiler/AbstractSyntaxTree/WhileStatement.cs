@@ -12,7 +12,7 @@ public class WhileStatement : Statement
         Statement = statement;
     }
 
-    public override void Accept(IAstVisitor visitor)
+    public override void Accept(INodeVisitor visitor)
     {
         visitor.VisitWhileStatement(this);
     }

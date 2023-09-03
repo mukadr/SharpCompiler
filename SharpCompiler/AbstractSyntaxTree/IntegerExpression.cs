@@ -10,7 +10,7 @@ public class IntegerExpression : Expression
         Type = Type.Integer;
     }
 
-    public override void Accept(IAstVisitor visitor)
+    public override void Accept(INodeVisitor visitor)
     {
         visitor.VisitIntegerExpression(this);
     }

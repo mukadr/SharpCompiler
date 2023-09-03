@@ -1,6 +1,6 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public interface IAstVisitor
+public interface INodeVisitor
 {
     void VisitAssignmentStatement(AssignmentStatement assignmentStatement);
     void VisitFuncStatement(FuncStatement funcStatement);
