@@ -2,5 +2,5 @@
 
 public abstract class Expression : Node
 {
-    public Type Type { get; set; } = Type.Unknown;
+    public SharpType Type { get; set; } = SharpType.Unknown;
 }

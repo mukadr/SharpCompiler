@@ -7,7 +7,7 @@ public class StringExpression : Expression
     public StringExpression(string value)
     {
         Value = value;
-        Type = Type.String;
+        Type = SharpType.String;
     }
 
     public override void Accept(INodeVisitor visitor)

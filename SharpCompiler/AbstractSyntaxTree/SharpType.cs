@@ -2,7 +2,7 @@
 
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class Type
+public class SharpType
 {
     public enum BaseType
     {
@@ -12,14 +12,14 @@ public class Type
         String
     }
 
-    public static Type Unknown = new Type(BaseType.Unknown);
-    public static Type Void = new Type(BaseType.Void);
-    public static Type Integer = new Type(BaseType.Integer);
-    public static Type String = new Type(BaseType.String);
+    public static SharpType Unknown = new SharpType(BaseType.Unknown);
+    public static SharpType Void = new SharpType(BaseType.Void);
+    public static SharpType Integer = new SharpType(BaseType.Integer);
+    public static SharpType String = new SharpType(BaseType.String);
 
     public BaseType Base { get; }
 
-    public Type(BaseType baseType)
+    public SharpType(BaseType baseType)
     {
         Base = baseType;
     }
@@ -31,7 +31,7 @@ public class Type
             BaseType.Void => "void",
             BaseType.Integer => "int",
             BaseType.String => "std::string",
-            _ => throw new Exception("Unknown C++ type.")
+            _ => throw new Exception("Unknown base type.")
         };
     }
 }

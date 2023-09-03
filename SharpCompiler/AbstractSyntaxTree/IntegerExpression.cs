@@ -7,7 +7,7 @@ public class IntegerExpression : Expression
     public IntegerExpression(int value)
     {
         Value = value;
-        Type = Type.Integer;
+        Type = SharpType.Integer;
     }
 
     public override void Accept(INodeVisitor visitor)

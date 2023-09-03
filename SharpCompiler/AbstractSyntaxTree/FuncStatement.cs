@@ -4,7 +4,7 @@ namespace SharpCompiler.AbstractSyntaxTree
 {
     public class FuncStatement : Statement
     {
-        public Type ReturnType { get; }
+        public SharpType ReturnType { get; }
 
         public string Name { get; }
 
@@ -12,7 +12,7 @@ namespace SharpCompiler.AbstractSyntaxTree
 
         public FuncStatement(string name, List<Statement> children)
         {
-            ReturnType = Type.Void;
+            ReturnType = SharpType.Void;
             Name = name;
             Children = children;
         }
