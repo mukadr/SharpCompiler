@@ -1,6 +1,5 @@
 ﻿using static ParseSharp.Parser;
 using SharpCompiler.AbstractSyntaxTree;
-using System.Collections.Generic;
 
 namespace SharpCompiler;
 
