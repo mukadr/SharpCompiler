@@ -15,6 +15,17 @@ public class CCodeEmitter : IAstVisitor
         Writer = writer ?? Console.Out;
     }
 
+    public TextWriter Compile(Ast program)
+    {
+        EmitLine("#include <stdio.h>");
+        EmitLine("#include <stdlib.h>");
+        EmitLine("#include <string.h>");
+
+        program.Accept(this);
+
+        return Writer;
+    }
+
     public TextWriter Emit(Ast program)
     {
         program.Accept(this);

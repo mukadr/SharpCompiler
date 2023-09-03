@@ -16,7 +16,7 @@ var program = SharpCompiler.Parser.Parse(File.ReadAllText(args[0]));
 using (var writter = new StreamWriter(cCodeFileName))
 {
     var emitter = new SharpCompiler.CodeGen.CCodeEmitter(writter);
-    emitter.Emit(program);
+    emitter.Compile(program);
 }
 
 var gcc = new Process
