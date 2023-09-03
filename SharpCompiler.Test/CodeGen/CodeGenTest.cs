@@ -1,7 +1,7 @@
 ﻿using SharpCompiler.CodeGen;
 using static SharpCompiler.Parser;
 
-namespace SharpCompiler.Test;
+namespace SharpCompiler.Test.CodeGen;
 
 public class CodeGenTest
 {

@@ -1,7 +1,7 @@
 ﻿using SharpCompiler.AbstractSyntaxTree;
 using static SharpCompiler.Parser;
 
-namespace SharpCompiler.Test;
+namespace SharpCompiler.Test.Parser;
 
 public class StatementTest
 {
