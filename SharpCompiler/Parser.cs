@@ -49,11 +49,11 @@ public class Parser
                 new AssignmentStatement(id.Value, expr))).Bind(expr => semi.Map(_ => expr)));
 
         var ifStatement = @if.And(lparen.And(expression.Bind(e =>
-            rparen.And(assignmentStatement.Bind(t =>
-                Optional(@else.And(assignmentStatement)).Map<Statement>(f => new IfStatement(e, t, f)))))));
+            rparen.And(statement.Bind(t =>
+                Optional(@else.And(statement)).Map<Statement>(f => new IfStatement(e, t, f)))))));
 
         var whileStatement = @while.And(lparen.And(expression.Bind(e =>
-            rparen.And(assignmentStatement.Map<Statement>(s => new WhileStatement(e, s))))));
+            rparen.And(statement.Map<Statement>(s => new WhileStatement(e, s))))));
 
         var funcStatement = func.And(ident.Bind(name =>
             lparen.And(rparen).And(lbrace.Bind(_ =>
