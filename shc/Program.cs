@@ -23,8 +23,14 @@ var gcc = new Process
     {
         FileName = "gcc.exe",
         Arguments = $"{cCodeFileName} -o {exeFileName}",
-        CreateNoWindow = true
+        CreateNoWindow = true,
+        RedirectStandardError = true
     }
 };
 
 gcc.Start();
+
+while (!gcc.StandardError.EndOfStream)
+{
+    Console.Error.WriteLine(gcc.StandardError.ReadLine());
+}
