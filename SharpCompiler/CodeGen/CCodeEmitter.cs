@@ -15,7 +15,7 @@ public class CCodeEmitter : IAstVisitor
         Writer = writer ?? Console.Out;
     }
 
-    public TextWriter Generate(Ast program)
+    public TextWriter Emit(Ast program)
     {
         program.Accept(this);
 

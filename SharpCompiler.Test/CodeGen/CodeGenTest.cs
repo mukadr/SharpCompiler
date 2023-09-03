@@ -14,7 +14,7 @@ public class CodeGenTest
 
     private string Emit(string program)
     {
-        return Emitter.Generate(Parse(program)).ToString() ?? string.Empty;
+        return Emitter.Emit(Parse(program)).ToString() ?? string.Empty;
     }
 
     [Fact]
