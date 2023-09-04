@@ -97,7 +97,7 @@ public class AnnotateAst : INodeVisitor
                 {
                     return SharpType.Integer;
                 }
-                throw new CompileException("Incompatible types in addition expression.");
+                break;
 
             case "-":
             case "*":
@@ -106,17 +106,17 @@ public class AnnotateAst : INodeVisitor
                 {
                     return SharpType.Integer;
                 }
-                throw new CompileException("Incompatible types in subtraction expression.");
+                break;
 
             case "==":
                 if (lhs == rhs)
                 {
                     return SharpType.Boolean;
                 }
-                throw new CompileException("Incompatible types in comparison expression.");
+                break;
         }
 
-        throw new CompileException("Unreachable.");
+        throw new CompileException("Incompatible types in binary expression.");
     }
 
     public void VisitBinaryExpression(BinaryExpression binaryExpression)
