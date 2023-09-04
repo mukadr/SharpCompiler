@@ -25,6 +25,7 @@ try
 catch (CompileException ex)
 {
     Console.Error.WriteLine("Compilation failed: " + ex.Message);
+    Environment.Exit(1);
     return;
 }
 
