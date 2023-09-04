@@ -68,6 +68,16 @@ public class CppCodeEmitter : INodeVisitor
         EmitLine(") << std::endl;");
     }
 
+    public void VisitAssertStatement(AssertStatement assertStatement)
+    {
+        EmitIndentation();
+        Emit("assert(");
+
+        assertStatement.Expression.Accept(this);
+
+        EmitLine(");");
+    }
+
     public void VisitFuncStatement(FuncStatement funcStatement)
     {
         var returnType = funcStatement.Name == "main" ? "int" : funcStatement.ReturnType.ToCppType();

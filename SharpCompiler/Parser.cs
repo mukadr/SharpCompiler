@@ -16,11 +16,13 @@ public class Parser
         var identifier = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
         var @string = Token(Match('"').And(Until(Match('"')).Map(value => value.Prefix)));
         var print = Token("print");
+        var assert = Token("assert");
         var plus = Token("+");
         var minus = Token("-");
         var star = Token("*");
         var slash = Token("/");
         var assign = Token("=");
+        var equals = Token("==");
         var semi = Token(";");
         var @void = Token("void");
         var @if = Token("if");
@@ -42,14 +44,21 @@ public class Parser
             star.Or(slash),
             (left, op, right, position) => new BinaryExpression(left, op, right));
 
-        var expression = BinaryExpression(
+        var addExpression = BinaryExpression(
             mulExpression,
             plus.Or(minus),
+            (left, op, right, position) => new BinaryExpression(left, op, right));
+
+        var expression = BinaryExpression(
+            addExpression,
+            equals,
             (left, op, right, position) => new BinaryExpression(left, op, right));
 
         var statement = Forward<Statement>();
 
         var printStatement = print.And(expression).Bind(e => semi.Map<Statement>(_ => new PrintStatement(e)));
+
+        var assertStatement = assert.And(expression).Bind(e => semi.Map<Statement>(_ => new AssertStatement(e)));
 
         var assignmentStatement = identifier.Bind(id =>
             assign.And(expression.Map<Statement>(expr =>
@@ -68,8 +77,9 @@ public class Parser
                     rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
 
         statement.Attach(
-            printStatement
-            .Or(funcStatement)
+            funcStatement
+            .Or(printStatement)
+            .Or(assertStatement)
             .Or(assignmentStatement)
             .Or(ifStatement)
             .Or(whileStatement));

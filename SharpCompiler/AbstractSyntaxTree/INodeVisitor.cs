@@ -7,6 +7,7 @@ public interface INodeVisitor
     void VisitIfStatement(IfStatement ifStatement);
     void VisitWhileStatement(WhileStatement whileStatement);
     void VisitPrintStatement(PrintStatement printStatement);
+    void VisitAssertStatement(AssertStatement assertStatement);
     void VisitBinaryExpression(BinaryExpression binaryExpression);
     void VisitIntegerExpression(IntegerExpression integerExpression);
     void VisitStringExpression(StringExpression stringExpression);

@@ -74,13 +74,57 @@ public class AnnotateAst : INodeVisitor
         return lhs;
     }
 
+    private SharpType TypeCheckBinaryExpression(SharpType lhs, string op, SharpType rhs)
+    {
+        if (lhs == SharpType.Unknown || rhs == SharpType.Unknown)
+        {
+            return SharpType.Unknown;
+        }
+
+        if (lhs == SharpType.Void || rhs == SharpType.Void)
+        {
+            throw new Exception("Can't operate on void type.");
+        }
+
+        switch (op)
+        {
+            case "+":
+                if (lhs == SharpType.String || rhs == SharpType.String)
+                {
+                    return SharpType.String;
+                }
+                if (lhs == SharpType.Integer && lhs == rhs)
+                {
+                    return SharpType.Integer;
+                }
+                throw new Exception("Incompatible types in addition expression.");
+
+            case "-":
+            case "*":
+            case "/":
+                if (lhs == SharpType.Integer && lhs == rhs)
+                {
+                    return SharpType.Integer;
+                }
+                throw new Exception("Incompatible types in subtraction expression.");
+
+            case "==":
+                if (lhs == rhs)
+                {
+                    return SharpType.Boolean;
+                }
+                throw new Exception("Incompatible types in comparison expression.");
+        }
+
+        throw new Exception("Unreachable.");
+    }
+
     public void VisitBinaryExpression(BinaryExpression binaryExpression)
     {
         binaryExpression.Left.Accept(this);
         binaryExpression.Right.Accept(this);
 
-        // XXX: Handle types for binary operators
-        binaryExpression.Type = TypeCheckAssignment(binaryExpression.Left.Type, binaryExpression.Right.Type);
+        binaryExpression.Type = TypeCheckBinaryExpression(binaryExpression.Left.Type, binaryExpression.Operator, binaryExpression.Right.Type);
     }
 
     public void VisitFuncStatement(FuncStatement funcStatement)
@@ -133,6 +177,16 @@ public class AnnotateAst : INodeVisitor
         if (printStatement.Expression.Type != SharpType.String)
         {
             throw new Exception("Expected string in print statement");
+        }
+    }
+
+    public void VisitAssertStatement(AssertStatement assertStatement)
+    {
+        assertStatement.Expression.Accept(this);
+
+        if (assertStatement.Expression.Type != SharpType.Boolean)
+        {
+            throw new Exception("Expected boolean in assert statement");
         }
     }
 
