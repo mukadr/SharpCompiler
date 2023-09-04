@@ -17,6 +17,7 @@ public class CppCodeEmitter : INodeVisitor
 
     public TextWriter Compile(Node program)
     {
+        EmitLine("#include <cassert>");
         EmitLine("#include <iostream>");
 
         return Emit(program);
