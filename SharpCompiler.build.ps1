@@ -5,10 +5,10 @@ task Clean {
     Remove-Item '.\**\obj\' -Recurse -Force -ErrorAction SilentlyContinue
 }
 
-task Test-Incorrect {
+task Test-Error-Messages {
     Push-Location ".\shc"
     try {    
-        Get-ChildItem "..\test\incorrect" -Filter *.shl | Foreach-Object {
+        Get-ChildItem "..\test\error-messages" -Filter *.shl | Foreach-Object {
             $output = (& dotnet run $_ 2>&1) | Out-String
 
             if (-not $output.Contains("Compilation failed"))
@@ -20,7 +20,7 @@ task Test-Incorrect {
 
             if (-not $output.Contains($expectedError))
             {
-                throw "Expected error condition to match."
+                throw "Expected error condition to match. Got (" + $output + ") Expected (" + $expectedError + ")"
             }
         }
     } 
@@ -29,10 +29,10 @@ task Test-Incorrect {
     }
 }
 
-task Test-Correct {
+task Test-Assertions {
     Push-Location ".\shc"
     try {    
-        Get-ChildItem "..\test\correct" -Filter *.shl | Foreach-Object {
+        Get-ChildItem "..\test\assertions" -Filter *.shl | Foreach-Object {
             Exec { dotnet run $_.FullName }
 
             $executable = [IO.Path]::ChangeExtension($_.FullName, ".exe");
@@ -45,7 +45,7 @@ task Test-Correct {
     }
 }
 
-task Test Build, Test-Incorrect, Test-Correct
+task Test Build, Test-Error-Messages, Test-Assertions
 
 task Build {
     Exec { dotnet build . }

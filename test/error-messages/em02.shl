@@ -1,0 +1,5 @@
+# Incompatible types in comparison expression.
+void main()
+{
+    x = "a" == 3;
+}

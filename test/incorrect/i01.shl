@@ -1,5 +1,0 @@
-# Expected boolean in assert statement
-void main()
-{
-    assert "bla";
-}

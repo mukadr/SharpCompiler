@@ -186,7 +186,7 @@ public class AnnotateAst : INodeVisitor
 
         if (assertStatement.Expression.Type != SharpType.Boolean)
         {
-            throw new CompileException("Expected boolean in assert statement");
+            throw new CompileException("Expected boolean in assert statement.");
         }
     }
 
