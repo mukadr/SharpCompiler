@@ -6,32 +6,36 @@ task Clean {
 }
 
 task Test-Error-Messages {
+    $SavedErrorActionPreference = $ErrorActionPreference
     Push-Location ".\shc"
-    try {    
+    try {
+        $ErrorActionPreference="Continue"
+
         Get-ChildItem "..\test\error-messages" -Filter *.shl | Foreach-Object {
-            $output = (& dotnet run $_ 2>&1) | Out-String
+            $output = (& dotnet run $_.FullName 2>&1) | Out-String
 
             if (-not $output.Contains("Compilation failed"))
             {
                 throw "Expected compilation to fail.";
             }
 
-            $expectedError = (Get-Content $_ -First 1).substring(2);
+            $expectedError = (Get-Content $_.FullName -First 1).substring(2);
 
             if (-not $output.Contains($expectedError))
             {
                 throw "Expected error condition to match. Got (" + $output + ") Expected (" + $expectedError + ")"
             }
         }
-    } 
+    }
     finally {
         Pop-Location
+        $ErrorActionPreference = $SavedErrorActionPreference
     }
 }
 
 task Test-Assertions {
     Push-Location ".\shc"
-    try {    
+    try {
         Get-ChildItem "..\test\assertions" -Filter *.shl | Foreach-Object {
             Exec { dotnet run $_.FullName }
 
@@ -39,7 +43,7 @@ task Test-Assertions {
 
             Exec { & $executable }
         }
-    } 
+    }
     finally {
         Pop-Location
     }
