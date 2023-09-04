@@ -30,7 +30,7 @@ public class AnnotateAst : INodeVisitor
     {
         if (CurrentScope == GlobalScope)
         {
-            throw new Exception("Can't pop global scope.");
+            throw new CompileException("Can't pop global scope.");
         }
 
         CurrentScope = CurrentScope.PreviousScope!;
@@ -63,12 +63,12 @@ public class AnnotateAst : INodeVisitor
 
         if (lhs == SharpType.Void || rhs == SharpType.Void)
         {
-            throw new Exception("Can't assign void.");
+            throw new CompileException("Can't assign void.");
         }
 
         if (lhs != rhs)
         {
-            throw new Exception("Incompatible types in assingment statement.");
+            throw new CompileException("Incompatible types in assingment statement.");
         }
 
         return lhs;
@@ -83,7 +83,7 @@ public class AnnotateAst : INodeVisitor
 
         if (lhs == SharpType.Void || rhs == SharpType.Void)
         {
-            throw new Exception("Can't operate on void type.");
+            throw new CompileException("Can't operate on void type.");
         }
 
         switch (op)
@@ -97,7 +97,7 @@ public class AnnotateAst : INodeVisitor
                 {
                     return SharpType.Integer;
                 }
-                throw new Exception("Incompatible types in addition expression.");
+                throw new CompileException("Incompatible types in addition expression.");
 
             case "-":
             case "*":
@@ -106,17 +106,17 @@ public class AnnotateAst : INodeVisitor
                 {
                     return SharpType.Integer;
                 }
-                throw new Exception("Incompatible types in subtraction expression.");
+                throw new CompileException("Incompatible types in subtraction expression.");
 
             case "==":
                 if (lhs == rhs)
                 {
                     return SharpType.Boolean;
                 }
-                throw new Exception("Incompatible types in comparison expression.");
+                throw new CompileException("Incompatible types in comparison expression.");
         }
 
-        throw new Exception("Unreachable.");
+        throw new CompileException("Unreachable.");
     }
 
     public void VisitBinaryExpression(BinaryExpression binaryExpression)
@@ -146,7 +146,7 @@ public class AnnotateAst : INodeVisitor
         if (ifStatement.Condition.Type != SharpType.Integer)
         {
             // XXX: Add boolean type
-            throw new Exception("Expected integer in if condition.");
+            throw new CompileException("Expected integer in if condition.");
         }
 
         PushScope();
@@ -176,7 +176,7 @@ public class AnnotateAst : INodeVisitor
 
         if (printStatement.Expression.Type != SharpType.String)
         {
-            throw new Exception("Expected string in print statement");
+            throw new CompileException("Expected string in print statement");
         }
     }
 
@@ -186,7 +186,7 @@ public class AnnotateAst : INodeVisitor
 
         if (assertStatement.Expression.Type != SharpType.Boolean)
         {
-            throw new Exception("Expected boolean in assert statement");
+            throw new CompileException("Expected boolean in assert statement");
         }
     }
 
@@ -202,7 +202,7 @@ public class AnnotateAst : INodeVisitor
         if (whileStatement.Condition.Type != SharpType.Integer)
         {
             // XXX: Add boolean type
-            throw new Exception("Expected integer in while condition.");
+            throw new CompileException("Expected integer in while condition.");
         }
 
         PushScope();

@@ -34,7 +34,7 @@ public class SharpType
             BaseType.Boolean => "bool",
             BaseType.Integer => "int",
             BaseType.String => "std::string",
-            _ => throw new Exception("Unknown base type.")
+            _ => throw new CompileException("Unknown base type.")
         };
     }
 }

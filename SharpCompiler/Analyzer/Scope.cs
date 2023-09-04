@@ -19,7 +19,7 @@ public class Scope
     {
         if (Variables.ContainsKey(v.Name))
         {
-            throw new Exception($"Redeclared variable {v.Name}.");
+            throw new CompileException($"Redeclared variable {v.Name}.");
         }
 
         Variables.Add(v.Name, v);
@@ -35,5 +35,5 @@ public class Scope
         return PreviousScope?.GetVariable(name);
     }
 
-    public Variable MustGetVariable(string name) => GetVariable(name) ?? throw new Exception($"Undeclared variable {name}.");
+    public Variable MustGetVariable(string name) => GetVariable(name) ?? throw new CompileException($"Undeclared variable {name}.");
 }

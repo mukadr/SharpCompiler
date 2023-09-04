@@ -1,6 +1,4 @@
 void main()
 {
     assert 7 == 1 + 2 * 3;
-
-    assert 1 == 0;
 }

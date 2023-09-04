@@ -1,4 +1,5 @@
 ﻿using SharpCompiler;
+using SharpCompiler.AbstractSyntaxTree;
 using SharpCompiler.CodeGen;
 using static SharpCompiler.Analyzer.AnnotateAst;
 using System;
@@ -14,9 +15,18 @@ if (args.Length < 1)
 var cppCodeFileName = Path.ChangeExtension(args[0], ".cpp");
 var exeFileName = Path.ChangeExtension(args[0], ".exe");
 
-var program = Parser.Parse(File.ReadAllText(args[0]));
+Node program;
 
-Analyze(program);
+try
+{
+    program = Parser.Parse(File.ReadAllText(args[0]));
+    Analyze(program);
+}
+catch (CompileException ex)
+{
+    Console.Error.WriteLine("Compilation failed: " + ex.Message);
+    return;
+}
 
 using (var writter = new StreamWriter(cppCodeFileName))
 {
