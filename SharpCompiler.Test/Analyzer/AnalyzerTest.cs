@@ -22,11 +22,19 @@ public class AnalyzerTest
     }
 
     [Fact]
-    public void If_Statement_Accepts_Integer_Condition()
+    public void If_Statement_Accepts_Boolean_Condition()
+    {
+        var program = Parse("if (1 == 1) x = 2;");
+
+        Analyze(program);
+    }
+
+    [Fact]
+    public void If_Statement_Rejects_Integer_Condition()
     {
         var program = Parse("if (1) x = 2;");
 
-        Analyze(program);
+        Assert.ThrowsAny<Exception>(() => Analyze(program));
     }
 
     [Fact]

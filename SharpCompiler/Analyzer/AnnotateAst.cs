@@ -143,10 +143,9 @@ public class AnnotateAst : INodeVisitor
     {
         ifStatement.Condition.Accept(this);
 
-        if (ifStatement.Condition.Type != SharpType.Integer)
+        if (ifStatement.Condition.Type != SharpType.Boolean)
         {
-            // XXX: Add boolean type
-            throw new CompileException("Expected integer in if condition.");
+            throw new CompileException("Expected boolean expression in if condition.");
         }
 
         PushScope();
