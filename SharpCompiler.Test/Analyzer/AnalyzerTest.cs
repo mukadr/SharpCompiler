@@ -46,11 +46,19 @@ public class AnalyzerTest
     }
 
     [Fact]
-    public void While_Statement_Accepts_Integer_Condition()
+    public void While_Statement_Accepts_Boolean_Condition()
+    {
+        var program = Parse("while (1 == 0) x = 2;");
+
+        Analyze(program);
+    }
+
+    [Fact]
+    public void While_Statement_Rejects_Integer_Condition()
     {
         var program = Parse("while (1) x = 2;");
 
-        Analyze(program);
+        Assert.ThrowsAny<Exception>(() => Analyze(program));
     }
 
     [Fact]

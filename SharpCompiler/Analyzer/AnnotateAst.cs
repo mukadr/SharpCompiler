@@ -198,10 +198,9 @@ public class AnnotateAst : INodeVisitor
     {
         whileStatement.Condition.Accept(this);
 
-        if (whileStatement.Condition.Type != SharpType.Integer)
+        if (whileStatement.Condition.Type != SharpType.Boolean)
         {
-            // XXX: Add boolean type
-            throw new CompileException("Expected integer in while condition.");
+            throw new CompileException("Expected boolean expression in while condition.");
         }
 
         PushScope();
