@@ -52,7 +52,8 @@ task Test-Assertions {
 task Test Build, Test-Error-Messages, Test-Assertions
 
 task Build {
-    Exec { dotnet build . }
+    Exec { dotnet build }
+    Exec { dotnet test --no-build --verbosity normal }
 }
 
 task . Build
