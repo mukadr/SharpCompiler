@@ -168,17 +168,17 @@ public class AnnotateAst : INodeVisitor
 
     public void VisitBooleanExpression(BooleanExpression booleanExpression)
     {
-        // NOP
+        booleanExpression.Type = SharpType.Boolean;
     }
 
     public void VisitIntegerExpression(IntegerExpression integerExpression)
     {
-        // NOP
+        integerExpression.Type = SharpType.Integer;
     }
 
     public void VisitStringExpression(StringExpression stringExpression)
     {
-        // NOP
+        stringExpression.Type = SharpType.String;
     }
 
     public void VisitVariableExpression(VariableExpression variableExpression)
