@@ -9,35 +9,32 @@ public class Parser
 
     static Parser()
     {
-        var whitespace = Match(' ').Or(Match('\t')).Or(Match('\r')).Or(Match('\n'));
         var comment = Match('#').And(Until(Match('\n'))).Map(value => value.Prefix);
-        var skipWhite = ZeroOrMore(whitespace.Or(comment));
 
-        ParseSharp.Parser<(T Value, ParseSharp.ParserPosition position)> Token<T>(ParseSharp.Parser<T> tokenParser) =>
-            skipWhite.And(tokenParser.Map((value, position) => (value, position)));
+        SkipWhitespace = ZeroOrMore(Whitespace.Or(comment));
 
         var digit = Match('0', '9');
         var letter = Match('a', 'z').Or(Match('A', 'Z')).Or(Match('_'));
         var number = Token(OneOrMore(digit));
         var identifier = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
         var @string = Token(Match('"').And(Until(Match('"')).Map(value => value.Prefix)));
-        var print = Token(Match("print"));
-        var assert = Token(Match("assert"));
-        var plus = Token(Match("+"));
-        var minus = Token(Match("-"));
-        var star = Token(Match("*"));
-        var slash = Token(Match("/"));
-        var assign = Token(Match("="));
-        var equals = Token(Match("=="));
-        var semi = Token(Match(";"));
-        var @void = Token(Match("void"));
-        var @if = Token(Match("if"));
-        var @else = Token(Match("else"));
-        var @while = Token(Match("while"));
-        var lbrace = Token(Match("{"));
-        var rbrace = Token(Match("}"));
-        var lparen = Token(Match("("));
-        var rparen = Token(Match(")"));
+        var print = Token("print");
+        var assert = Token("assert");
+        var plus = Token("+");
+        var minus = Token("-");
+        var star = Token("*");
+        var slash = Token("/");
+        var assign = Token("=");
+        var equals = Token("==");
+        var semi = Token(";");
+        var @void = Token("void");
+        var @if = Token("if");
+        var @else = Token("else");
+        var @while = Token("while");
+        var lbrace = Token("{");
+        var rbrace = Token("}");
+        var lparen = Token("(");
+        var rparen = Token(")");
 
         var integerExpression = number.Map<Expression>(n => new IntegerExpression(int.Parse(n.Value)));
 
@@ -90,7 +87,7 @@ public class Parser
             .Or(ifStatement)
             .Or(whileStatement));
 
-        StatementParser = statement.Bind(node => skipWhite.Map(_ => node));
+        StatementParser = SkipWhitespace.And(statement);
     }
 
     public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();
