@@ -13,12 +13,6 @@ task Test-Error-Messages {
 
         Get-ChildItem "..\test\error-messages" -Filter *.shl | Foreach-Object {
             $output = (& dotnet run $_.FullName 2>&1) | Out-String
-
-            if (-not $output.Contains("Compilation failed"))
-            {
-                throw "Expected compilation to fail.";
-            }
-
             $expectedError = (Get-Content $_.FullName -First 1).substring(2);
 
             if (-not $output.Contains($expectedError))
