@@ -76,4 +76,28 @@ public class AnalyzerTest
 
         Assert.ThrowsAny<Exception>(() => Analyze(program));
     }
+
+    [Fact]
+    public void Can_Assign_Same_Type_To_Same_Variable_Twice()
+    {
+        var program = Parse(@"
+            void variables() {
+                x = 10;
+                x = 20;
+            }");
+
+        Analyze(program);
+    }
+
+    [Fact]
+    public void Cannot_Assign_Different_Types_To_Same_Variable()
+    {
+        var program = Parse(@"
+            void variables() {
+                x = 10;
+                x = false;
+            }");
+
+        Assert.ThrowsAny<Exception>(() => Analyze(program));
+    }
 }
