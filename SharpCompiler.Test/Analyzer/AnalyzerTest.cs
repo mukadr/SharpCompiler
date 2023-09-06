@@ -22,6 +22,14 @@ public class AnalyzerTest
     }
 
     [Fact]
+    public void Print_Statement_Rejects_Boolean()
+    {
+        var program = Parse("print 1 == 0;");
+
+        Assert.ThrowsAny<Exception>(() => Analyze(program));
+    }
+
+    [Fact]
     public void If_Statement_Accepts_Boolean_Condition()
     {
         var program = Parse("if (1 == 1) x = 2;");
