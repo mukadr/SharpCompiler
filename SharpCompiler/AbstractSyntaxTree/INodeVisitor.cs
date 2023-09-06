@@ -9,6 +9,7 @@ public interface INodeVisitor
     void VisitPrintStatement(PrintStatement printStatement);
     void VisitAssertStatement(AssertStatement assertStatement);
     void VisitBinaryExpression(BinaryExpression binaryExpression);
+    void VisitBooleanExpression(BooleanExpression booleanExpression);
     void VisitIntegerExpression(IntegerExpression integerExpression);
     void VisitStringExpression(StringExpression stringExpression);
 }

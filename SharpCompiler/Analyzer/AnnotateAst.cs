@@ -164,7 +164,17 @@ public class AnnotateAst : INodeVisitor
         }
     }
 
+    public void VisitBooleanExpression(BooleanExpression booleanExpression)
+    {
+        // NOP
+    }
+
     public void VisitIntegerExpression(IntegerExpression integerExpression)
+    {
+        // NOP
+    }
+
+    public void VisitStringExpression(StringExpression stringExpression)
     {
         // NOP
     }
@@ -187,11 +197,6 @@ public class AnnotateAst : INodeVisitor
         {
             throw new CompileException("Expected boolean in assert statement.");
         }
-    }
-
-    public void VisitStringExpression(StringExpression stringExpression)
-    {
-        // NOP
     }
 
     public void VisitWhileStatement(WhileStatement whileStatement)

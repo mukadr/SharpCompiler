@@ -157,6 +157,11 @@ public class CppCodeEmitter : INodeVisitor
         Emit(")");
     }
 
+    public void VisitBooleanExpression(BooleanExpression booleanExpression)
+    {
+        Emit(booleanExpression.Value ? "true" : "false");
+    }
+
     public void VisitIntegerExpression(IntegerExpression integerExpression)
     {
         Emit(integerExpression.Value.ToString());

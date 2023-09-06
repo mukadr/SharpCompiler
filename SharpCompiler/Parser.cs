@@ -18,8 +18,6 @@ public class Parser
         var number = Token(OneOrMore(digit));
         var identifier = Token(letter.Bind(first => ZeroOrMore(letter.Or(digit)).Map(rest => first + rest)));
         var @string = Token(Match('"').And(Until(Match('"')).Map(value => value.Prefix)));
-        var print = Token("print");
-        var assert = Token("assert");
         var plus = Token("+");
         var minus = Token("-");
         var star = Token("*");
@@ -27,20 +25,28 @@ public class Parser
         var assign = Token("=");
         var equals = Token("==");
         var semi = Token(";");
-        var @void = Token("void");
-        var @if = Token("if");
-        var @else = Token("else");
-        var @while = Token("while");
         var lbrace = Token("{");
         var rbrace = Token("}");
         var lparen = Token("(");
         var rparen = Token(")");
+        var assert = Token("assert");
+        var @else = Token("else");
+        var @false = Token("false");
+        var @if = Token("if");
+        var print = Token("print");
+        var @true = Token("true");
+        var @void = Token("void");
+        var @while = Token("while");
+
+        var booleanExpression = @true.Or(@false).Map<Expression>(b => new BooleanExpression(b.Value == "true"));
 
         var integerExpression = number.Map<Expression>(n => new IntegerExpression(int.Parse(n.Value)));
 
         var stringExpression = @string.Map<Expression>(s => new StringExpression(s.Value));
 
-        var factor = integerExpression.Or(stringExpression);
+        var factor = booleanExpression
+            .Or(integerExpression)
+            .Or(stringExpression);
 
         var mulExpression = BinaryExpression(
             factor,

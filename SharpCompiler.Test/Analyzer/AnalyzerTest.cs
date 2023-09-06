@@ -32,7 +32,7 @@ public class AnalyzerTest
     [Fact]
     public void If_Statement_Accepts_Boolean_Condition()
     {
-        var program = Parse("if (1 == 1) x = 2;");
+        var program = Parse("if (true) x = 2;");
 
         Analyze(program);
     }
@@ -56,7 +56,7 @@ public class AnalyzerTest
     [Fact]
     public void While_Statement_Accepts_Boolean_Condition()
     {
-        var program = Parse("while (1 == 0) x = 2;");
+        var program = Parse("while (false) x = 2;");
 
         Analyze(program);
     }

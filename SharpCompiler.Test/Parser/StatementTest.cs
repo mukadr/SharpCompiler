@@ -34,10 +34,10 @@ public class StatementTest
     [Fact]
     public void Accepts_If_Statement()
     {
-        var statement = Parse("if (10) x = 30;");
+        var statement = Parse("if (true) x = 30;");
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
-        Assert.IsType<IntegerExpression>(ifStatement.Condition);
+        Assert.IsType<BooleanExpression>(ifStatement.Condition);
         Assert.IsType<AssignmentStatement>(ifStatement.TrueStatement);
         Assert.Null(ifStatement.FalseStatement);
     }
@@ -45,7 +45,7 @@ public class StatementTest
     [Fact]
     public void Accepts_If_With_Else_Statement()
     {
-        var statement = Parse("if (1 + 2) y = 1; else y = 2;");
+        var statement = Parse("if (1 + 2 == 3) y = 1; else y = 2;");
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
         Assert.IsType<BinaryExpression>(ifStatement.Condition);
@@ -56,10 +56,10 @@ public class StatementTest
     [Fact]
     public void Accepts_While_Statement()
     {
-        var statement = Parse("while (1) y = 2;");
+        var statement = Parse("while (false) y = 2;");
 
         var whileStatement = Assert.IsType<WhileStatement>(statement);
-        Assert.IsType<IntegerExpression>(whileStatement.Condition);
+        Assert.IsType<BooleanExpression>(whileStatement.Condition);
         Assert.IsType<AssignmentStatement>(whileStatement.Statement);
     }
 
@@ -95,8 +95,8 @@ public class StatementTest
         var statement = Parse(@"
             void sample() {
                 x = 0;
-                if (1) x = 2; else x = 1;
-                while (2) x = 0;
+                if (true) x = 2; else x = 1;
+                while (false) x = 0;
             }");
 
         var funcStatement = Assert.IsType<FuncStatement>(statement);
