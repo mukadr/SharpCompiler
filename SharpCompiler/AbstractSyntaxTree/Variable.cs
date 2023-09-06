@@ -6,6 +6,8 @@ public class Variable
 
     public SharpType Type { get; }
 
+    public bool Initialized = false;
+
     public Variable(string name, SharpType type)
     {
         Name = name;

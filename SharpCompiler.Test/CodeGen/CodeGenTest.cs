@@ -1,5 +1,6 @@
 ﻿using SharpCompiler.CodeGen;
 using static SharpCompiler.Parser;
+using static SharpCompiler.Analyzer.AnnotateAst;
 
 namespace SharpCompiler.Test.CodeGen;
 
@@ -14,14 +15,18 @@ public class CodeGenTest
 
     private string Emit(string program)
     {
-        return Emitter.Emit(Parse(program)).ToString() ?? string.Empty;
+        var node = Parse(program);
+
+        Analyze(node);
+
+        return Emitter.Emit(node).ToString() ?? string.Empty;
     }
 
     [Fact]
     public void Generates_Assignment()
     {
         Assert.Equal(
-            @"x = 1;
+            @"int x = 1;
 ",
             Emit("x = 1;"));
     }
@@ -30,7 +35,7 @@ public class CodeGenTest
     public void Generates_BinaryExpression()
     {
         Assert.Equal(
-            @"x = (1 + (2 * 3));
+            @"int x = (1 + (2 * 3));
 ",
             Emit("x = 1 + 2 * 3;"));
     }
@@ -39,24 +44,24 @@ public class CodeGenTest
     public void Generates_If_Statement()
     {
         Assert.Equal(
-            @"if (1) {
-    x = 2;
+            @"if (true) {
+    int x = 2;
 } else {
-    y = 3;
+    int y = 3;
 }
 ",
-            Emit("if (1) x = 2; else y = 3;"));
+            Emit("if (true) x = 2; else y = 3;"));
     }
 
     [Fact]
     public void Generates_While_Statement()
     {
         Assert.Equal(
-            @"while (1) {
-    x = 2;
+            @"while (true) {
+    int x = 2;
 }
 ",
-            Emit("while (1) x = 2;"));
+            Emit("while (true) x = 2;"));
     }
 
     [Fact]
@@ -64,9 +69,9 @@ public class CodeGenTest
     {
         Assert.Equal(
             @"int main() {
-    x = 1;
-    while (2) {
-        if (3) {
+    int x = 1;
+    while (true) {
+        if (false) {
             x = 4;
         } else {
             x = 5;
@@ -74,6 +79,6 @@ public class CodeGenTest
     }
 }
 ",
-            Emit("void main() { x = 1; while (2) if (3) x = 4; else x = 5; }"));
+            Emit("void main() { x = 1; while (true) if (false) x = 4; else x = 5; }"));
     }
 }

@@ -17,7 +17,7 @@ public class StatementTest
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
 
-        Assert.Equal(id, assignment.Variable);
+        Assert.Equal(id, assignment.VariableName);
     }
 
     [Fact]
@@ -85,8 +85,8 @@ public class StatementTest
         var xAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[0]);
         var yAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[1]);
 
-        Assert.Equal("x", xAssignment.Variable);
-        Assert.Equal("y", yAssignment.Variable);
+        Assert.Equal("x", xAssignment.VariableName);
+        Assert.Equal("y", yAssignment.VariableName);
     }
 
     [Fact]

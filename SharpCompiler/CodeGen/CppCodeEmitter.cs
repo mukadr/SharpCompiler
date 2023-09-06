@@ -51,7 +51,16 @@ public class CppCodeEmitter : INodeVisitor
     public void VisitAssignmentStatement(AssignmentStatement assignmentStatement)
     {
         EmitIndentation();
-        Emit(assignmentStatement.Variable);
+
+        if (!assignmentStatement.Variable!.Initialized)
+        {
+            Emit(assignmentStatement.Variable.Type.ToCppType());
+            Emit(" ");
+
+            assignmentStatement.Variable.Initialized = true;
+        }
+
+        Emit(assignmentStatement.VariableName);
         Emit(" = ");
 
         assignmentStatement.Rhs.Accept(this);

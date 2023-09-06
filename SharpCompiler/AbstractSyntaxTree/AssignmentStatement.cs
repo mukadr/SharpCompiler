@@ -2,13 +2,15 @@
 
 public class AssignmentStatement : Statement
 {
-    public string Variable { get; }
+    public string VariableName { get; }
 
     public Expression Rhs { get; }
 
-    public AssignmentStatement(string variable, Expression rhs)
+    public Variable? Variable { get; set; }
+
+    public AssignmentStatement(string variableName, Expression rhs)
     {
-        Variable = variable;
+        VariableName = variableName;
         Rhs = rhs;
     }
 

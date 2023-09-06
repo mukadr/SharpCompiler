@@ -40,11 +40,11 @@ public class AnnotateAst : INodeVisitor
     {
         assignmentStatement.Rhs.Accept(this);
 
-        var variable = CurrentScope.GetVariable(assignmentStatement.Variable);
+        var variable = CurrentScope.GetVariable(assignmentStatement.VariableName);
 
         if (variable is null)
         {
-            variable = new Variable(assignmentStatement.Variable, assignmentStatement.Rhs.Type);
+            variable = new Variable(assignmentStatement.VariableName, assignmentStatement.Rhs.Type);
 
             CurrentScope.Add(variable);
         }
@@ -52,6 +52,8 @@ public class AnnotateAst : INodeVisitor
         {
             TypeCheckAssignment(variable.Type, assignmentStatement.Rhs.Type);
         }
+
+        assignmentStatement.Variable = variable;
     }
 
     private SharpType TypeCheckAssignment(SharpType lhs, SharpType rhs)
