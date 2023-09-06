@@ -18,7 +18,7 @@ public class AnalyzerTest
     {
         var program = Parse("print 150;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class AnalyzerTest
     {
         var program = Parse("print 1 == 0;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class AnalyzerTest
     {
         var program = Parse("if (1) x = 2;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class AnalyzerTest
     {
         var program = Parse("if (\"a\") x = 2;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class AnalyzerTest
     {
         var program = Parse("while (1) x = 2;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class AnalyzerTest
     {
         var program = Parse("while (\"a\") x = 2;");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 
     [Fact]
@@ -98,6 +98,6 @@ public class AnalyzerTest
                 x = false;
             }");
 
-        Assert.ThrowsAny<Exception>(() => Analyze(program));
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
 }
