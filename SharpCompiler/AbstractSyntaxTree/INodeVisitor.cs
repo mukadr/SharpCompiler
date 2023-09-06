@@ -12,4 +12,5 @@ public interface INodeVisitor
     void VisitBooleanExpression(BooleanExpression booleanExpression);
     void VisitIntegerExpression(IntegerExpression integerExpression);
     void VisitStringExpression(StringExpression stringExpression);
+    void VisitVariableExpression(VariableExpression variableExpression);
 }

@@ -173,4 +173,9 @@ public class CppCodeEmitter : INodeVisitor
         Emit(stringExpression.Value);
         Emit("\"");
     }
+
+    public void VisitVariableExpression(VariableExpression variableExpression)
+    {
+        Emit(variableExpression.Name);
+    }
 }

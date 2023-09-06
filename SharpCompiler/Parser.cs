@@ -1,5 +1,6 @@
 ﻿using static ParseSharp.Parser;
 using SharpCompiler.AbstractSyntaxTree;
+using System.Threading;
 
 namespace SharpCompiler;
 
@@ -44,9 +45,12 @@ public class Parser
 
         var stringExpression = @string.Map<Expression>(s => new StringExpression(s.Value));
 
+        var variableExpression = identifier.Map<Expression>(v => new VariableExpression(v.Value));
+
         var factor = booleanExpression
             .Or(integerExpression)
-            .Or(stringExpression);
+            .Or(stringExpression)
+            .Or(variableExpression);
 
         var mulExpression = BinaryExpression(
             factor,

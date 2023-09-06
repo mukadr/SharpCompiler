@@ -179,6 +179,18 @@ public class AnnotateAst : INodeVisitor
         // NOP
     }
 
+    public void VisitVariableExpression(VariableExpression variableExpression)
+    {
+        var variable = CurrentScope.GetVariable(variableExpression.Name);
+
+        if (variable is null)
+        {
+            throw new CompileException("Variable " + variableExpression.Name + " undeclared.");
+        }
+
+        variableExpression.Type = variable.Type;
+    }
+
     public void VisitPrintStatement(PrintStatement printStatement)
     {
         printStatement.Expression.Accept(this);
