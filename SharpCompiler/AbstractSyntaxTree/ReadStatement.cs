@@ -4,7 +4,7 @@ public class ReadStatement : Statement
 {
     public VariableExpression VariableExpression { get; }
 
-    public Variable Variable { get; set; }
+    public Variable? Variable { get; set; }
 
     public ReadStatement(VariableExpression variableExpression)
     {
