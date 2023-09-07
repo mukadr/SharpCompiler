@@ -48,6 +48,7 @@ var gcc = new Process
 };
 
 gcc.Start();
+gcc.WaitForExit();
 
 if (!gcc.StandardError.EndOfStream)
 {
