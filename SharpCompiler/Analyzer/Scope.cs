@@ -17,19 +17,17 @@ public class Scope
 
     public void Add(Variable v)
     {
-        if (Variables.ContainsKey(v.Name))
+        if (!Variables.TryAdd(v.Name, v))
         {
             throw new CompileException($"Redeclared variable {v.Name}.");
         }
-
-        Variables.Add(v.Name, v);
     }
 
     public Variable? GetVariable(string name)
     {
-        if (Variables.ContainsKey(name))
+        if (Variables.TryGetValue(name, out var variable))
         {
-            return Variables[name];
+            return variable;
         }
 
         return PreviousScope?.GetVariable(name);
