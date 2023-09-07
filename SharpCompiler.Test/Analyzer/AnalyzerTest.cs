@@ -135,4 +135,27 @@ public class AnalyzerTest
 
         Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
+
+    [Fact]
+    public void Cannot_Read_Undeclared_variable()
+    {
+        var program = Parse(@"
+            void variables() {
+                read x;
+            }");
+
+        Assert.ThrowsAny<CompileException>(() => Analyze(program));
+    }
+
+    [Fact]
+    public void Can_Read_Declared_Variable()
+    {
+        var program = Parse(@"
+            void variables() {
+                x = 10;
+                read x;
+            }");
+
+        Analyze(program);
+    }
 }

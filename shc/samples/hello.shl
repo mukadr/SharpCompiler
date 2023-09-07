@@ -1,8 +1,11 @@
 void main()
 {
-    print "Hello World from SharpCompiler!";
+    age = 0;
+    print "Hello! Tell me your age: ";
+    read age;
 
-    print "Use shc hello.shl to generate hello.exe";
-
-    print "You need GCC available in your PATH";
+    if (age == 33)
+        print "You are Jesus Christ!";
+    else
+        print "Sorry, you are a mere mortal.";
 }

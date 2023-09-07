@@ -78,6 +78,14 @@ public class CppCodeEmitter : INodeVisitor
         EmitLine(") << std::endl;");
     }
 
+    public void VisitReadStatement(ReadStatement readStatement)
+    {
+        EmitIndentation();
+        Emit("std::cin >> ");
+        Emit(readStatement.Variable.Name);
+        EmitLine(";");
+    }
+
     public void VisitAssertStatement(AssertStatement assertStatement)
     {
         EmitIndentation();

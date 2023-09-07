@@ -35,6 +35,7 @@ public class Parser
         var @false = Token("false");
         var @if = Token("if");
         var print = Token("print");
+        var read = Token("read");
         var @true = Token("true");
         var @void = Token("void");
         var @while = Token("while");
@@ -71,6 +72,8 @@ public class Parser
 
         var printStatement = print.And(expression).Bind(e => semi.Map<Statement>(_ => new PrintStatement(e)));
 
+        var readStatement = read.And(variableExpression).Bind(v => semi.Map<Statement>(_ => new ReadStatement((VariableExpression)v)));
+
         var assertStatement = assert.And(expression).Bind(e => semi.Map<Statement>(_ => new AssertStatement(e)));
 
         var assignmentStatement = identifier.Bind(id =>
@@ -92,6 +95,7 @@ public class Parser
         statement.Attach(
             funcStatement
             .Or(printStatement)
+            .Or(readStatement)
             .Or(assertStatement)
             .Or(assignmentStatement)
             .Or(ifStatement)
@@ -109,5 +113,5 @@ public class Parser
         _sourceText = sourceText;
     }
 
-    public Statement Parse() => StatementParser.ParseAllText(_sourceText);   
+    public Statement Parse() => StatementParser.ParseAllText(_sourceText);
 }

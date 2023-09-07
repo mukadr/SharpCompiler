@@ -198,6 +198,13 @@ public class AnnotateAst : INodeVisitor
         }
     }
 
+    public void VisitReadStatement(ReadStatement readStatement)
+    {
+        var variable = CurrentScope.MustGetVariable(readStatement.VariableExpression.Name);
+
+        readStatement.Variable = variable;
+    }
+
     public void VisitAssertStatement(AssertStatement assertStatement)
     {
         assertStatement.Expression.Accept(this);
