@@ -40,7 +40,7 @@ var gcc = new Process
     StartInfo = new ProcessStartInfo
     {
         FileName = "g++",
-        Arguments = $"{cppCodeFileName} -o {exeFileName} -Wall -O2",
+        Arguments = $"{cppCodeFileName} -o {exeFileName} -w -O2",
         CreateNoWindow = true,
         RedirectStandardError = true
     }
