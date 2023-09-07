@@ -93,15 +93,14 @@ public class Parser
                     rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
 
         statement.Attach(
-            funcStatement
-            .Or(printStatement)
+            printStatement
             .Or(readStatement)
             .Or(assertStatement)
             .Or(assignmentStatement)
             .Or(ifStatement)
             .Or(whileStatement));
 
-        StatementParser = SkipWhitespace.And(statement);
+        StatementParser = SkipWhitespace.And(funcStatement);
     }
 
     public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();
