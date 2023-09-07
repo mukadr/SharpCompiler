@@ -1,7 +1,8 @@
 ﻿using SharpCompiler;
 using SharpCompiler.AbstractSyntaxTree;
 using SharpCompiler.CodeGen;
-using static SharpCompiler.Analyzer.AnnotateAst;
+using SharpCompiler.Parser;
+using static SharpCompiler.Analyzer.SharpAnalyzer;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,7 +20,7 @@ Node program;
 
 try
 {
-    program = Parser.Parse(File.ReadAllText(args[0]));
+    program = SharpParser.Parse(File.ReadAllText(args[0]));
     Analyze(program);
 }
 catch (CompileException ex)

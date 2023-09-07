@@ -1,14 +1,15 @@
-﻿using static ParseSharp.Parser;
+﻿using ParseSharp;
+using static ParseSharp.Parser;
 using SharpCompiler.AbstractSyntaxTree;
 using System.Threading;
 
-namespace SharpCompiler;
+namespace SharpCompiler.Parser;
 
-public class Parser
+public class SharpParser
 {
-    private static readonly ParseSharp.Parser<Statement> StatementParser;
+    private static readonly Parser<Statement> StatementParser;
 
-    static Parser()
+    static SharpParser()
     {
         var comment = Match('#').And(Until(Match('\n'))).Map(value => value.Prefix);
 
@@ -103,11 +104,11 @@ public class Parser
         StatementParser = SkipWhitespace.And(funcStatement);
     }
 
-    public static Statement Parse(string sourceText) => new Parser(sourceText).Parse();
+    public static Statement Parse(string sourceText) => new SharpParser(sourceText).Parse();
 
     private readonly string _sourceText;
 
-    public Parser(string sourceText)
+    public SharpParser(string sourceText)
     {
         _sourceText = sourceText;
     }

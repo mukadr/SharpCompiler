@@ -1,9 +1,9 @@
-﻿using static SharpCompiler.Parser;
-using static SharpCompiler.Analyzer.AnnotateAst;
+﻿using static SharpCompiler.Analyzer.SharpAnalyzer;
+using static SharpCompiler.Parser.SharpParser;
 
 namespace SharpCompiler.Test.Analyzer;
 
-public class AnalyzerTest
+public class SharpAnalyzerTest
 {
     [Fact]
     public void Print_Statement_Accepts_String()

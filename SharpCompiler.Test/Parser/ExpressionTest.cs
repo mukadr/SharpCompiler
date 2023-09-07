@@ -1,5 +1,5 @@
 using SharpCompiler.AbstractSyntaxTree;
-using static SharpCompiler.Parser;
+using static SharpCompiler.Parser.SharpParser;
 using static SharpCompiler.Test.Parser.Util;
 
 namespace SharpCompiler.Test.Parser;

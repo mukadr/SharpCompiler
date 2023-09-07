@@ -3,18 +3,18 @@ using SharpCompiler.AbstractSyntaxTree;
 
 namespace SharpCompiler.Analyzer;
 
-public class AnnotateAst : INodeVisitor
+public class SharpAnalyzer : INodeVisitor
 {
     private Scope GlobalScope { get; }
     private Scope CurrentScope { get; set; }
 
-    public AnnotateAst()
+    public SharpAnalyzer()
     {
         GlobalScope = new Scope();
         CurrentScope = GlobalScope;
     }
 
-    public static void Analyze(Node program) => new AnnotateAst().Annotate(program);
+    public static void Analyze(Node program) => new SharpAnalyzer().Annotate(program);
 
     public void Annotate(Node program)
     {

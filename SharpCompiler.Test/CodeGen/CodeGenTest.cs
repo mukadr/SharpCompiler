@@ -1,6 +1,6 @@
 ﻿using SharpCompiler.CodeGen;
-using static SharpCompiler.Parser;
-using static SharpCompiler.Analyzer.AnnotateAst;
+using static SharpCompiler.Analyzer.SharpAnalyzer;
+using static SharpCompiler.Parser.SharpParser;
 
 namespace SharpCompiler.Test.CodeGen;
 
