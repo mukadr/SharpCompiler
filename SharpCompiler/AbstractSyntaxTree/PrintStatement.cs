@@ -1,17 +1,16 @@
-﻿namespace SharpCompiler.AbstractSyntaxTree
+﻿namespace SharpCompiler.AbstractSyntaxTree;
+
+public class PrintStatement : Statement
 {
-    public class PrintStatement : Statement
+    public Expression Expression { get; }
+
+    public PrintStatement(Expression expression)
     {
-        public Expression Expression { get; }
+        Expression = expression;
+    }
 
-        public PrintStatement(Expression expression)
-        {
-            Expression = expression;
-        }
-
-        public override void Accept(INodeVisitor visitor)
-        {
-            visitor.VisitPrintStatement(this);
-        }
+    public override void Accept(INodeVisitor visitor)
+    {
+        visitor.VisitPrintStatement(this);
     }
 }
