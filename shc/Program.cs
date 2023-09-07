@@ -48,7 +48,12 @@ var gcc = new Process
 
 gcc.Start();
 
-while (!gcc.StandardError.EndOfStream)
+if (!gcc.StandardError.EndOfStream)
 {
-    Console.Error.WriteLine(gcc.StandardError.ReadLine());
+    do
+    {
+        Console.Error.WriteLine(gcc.StandardError.ReadLine());
+    } while (!gcc.StandardError.EndOfStream);
+
+    Environment.Exit(1);
 }
