@@ -1,0 +1,5 @@
+# Expected boolean expression in if condition.
+void main()
+{
+    if (1) x = 1;
+}

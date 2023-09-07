@@ -6,4 +6,8 @@ void main()
         assert true;
     else
         assert false;
+
+    y = "a" + "b" + "c";
+
+    assert y == "abc";
 }
