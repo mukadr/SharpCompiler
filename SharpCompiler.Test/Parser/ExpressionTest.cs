@@ -1,14 +1,37 @@
 using SharpCompiler.AbstractSyntaxTree;
 using static SharpCompiler.Parser;
+using static SharpCompiler.Test.Parser.Util;
 
 namespace SharpCompiler.Test.Parser;
 
 public class ExpressionTest
 {
     [Fact]
+    public void Accepts_False()
+    {
+        var statement = GetSingleStatement(Parse("void t() { x = false; }"));
+
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
+        var boolean = Assert.IsType<BooleanExpression>(assignment.Rhs);
+
+        Assert.False(boolean.Value);
+    }
+
+    [Fact]
+    public void Accepts_True()
+    {
+        var statement = GetSingleStatement(Parse("void t() { x = true; }"));
+
+        var assignment = Assert.IsType<AssignmentStatement>(statement);
+        var boolean = Assert.IsType<BooleanExpression>(assignment.Rhs);
+
+        Assert.True(boolean.Value);
+    }
+
+    [Fact]
     public void Accepts_Integer()
     {
-        var statement = Parse("x = 35;");
+        var statement = GetSingleStatement(Parse("void t() { x = 35; }"));
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
         var integer = Assert.IsType<IntegerExpression>(assignment.Rhs);
@@ -19,7 +42,7 @@ public class ExpressionTest
     [Fact]
     public void Accepts_String()
     {
-        var statement = Parse("x = \"Hello World!\";");
+        var statement = GetSingleStatement(Parse("void t() { x = \"Hello World!\"; }"));
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
         var @string = Assert.IsType<StringExpression>(assignment.Rhs);
@@ -34,7 +57,7 @@ public class ExpressionTest
     [InlineData("/")]
     public void Accepts_Binary_Expression(string @operator)
     {
-        var statement = Parse($"x = 1 {@operator} 2 {@operator} 3;");
+        var statement = GetSingleStatement(Parse($"void t() {{ x = 1 {@operator} 2 {@operator} 3; }}"));
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);
@@ -55,7 +78,7 @@ public class ExpressionTest
     [InlineData("-", "/")]
     public void Accepts_Binary_Expression_With_Correct_Precedence(string operator1, string operator2)
     {
-        var statement = Parse($"x = 1 {operator1} 2 {operator2} 3;");
+        var statement = GetSingleStatement(Parse($"void t() {{ x = 1 {operator1} 2 {operator2} 3; }}"));
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
         var binary = Assert.IsType<BinaryExpression>(assignment.Rhs);

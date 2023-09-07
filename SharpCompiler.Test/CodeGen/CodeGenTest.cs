@@ -26,55 +26,65 @@ public class CodeGenTest
     public void Generates_Assignment()
     {
         Assert.Equal(
-            @"int x = 1;
+            @"void t() {
+    int x = 1;
+}
 ",
-            Emit("x = 1;"));
+            Emit("void t() { x = 1; }"));
     }
 
     [Fact]
     public void Generates_BinaryExpression()
     {
         Assert.Equal(
-            @"int x = (1 + (2 * 3));
+            @"void t() {
+    int x = (1 + (2 * 3));
+}
 ",
-            Emit("x = 1 + 2 * 3;"));
+            Emit("void t() { x = 1 + 2 * 3; }"));
     }
 
     [Fact]
     public void Generates_String_Concatenation()
     {
         Assert.Equal(
-            @"std::string a = (std::string(""a"") + std::string(""b""));
+            @"void t() {
+    std::string a = (std::string(""a"") + std::string(""b""));
+}
 ",
-            Emit("a = \"a\" + \"b\";"));
+            Emit("void t() { a = \"a\" + \"b\"; }"));
     }
 
     [Fact]
     public void Generates_If_Statement()
     {
         Assert.Equal(
-            @"if (true) {
-    int x = 2;
-} else {
-    int y = 3;
+            @"void t() {
+    if (true) {
+        int x = 2;
+    } else {
+        int y = 3;
+    }
 }
 ",
-            Emit("if (true) x = 2; else y = 3;"));
+            Emit("void t() { if (true) x = 2; else y = 3; }"));
     }
 
     [Fact]
     public void Generates_While_Statement()
     {
         Assert.Equal(
-            @"while (true) {
-    int x = 2;
+            @"void t() {
+    while (true) {
+        int x = 2;
+    }
 }
 ",
-            Emit("while (true) x = 2;"));
+            Emit("void t() { while (true) x = 2; }"));
     }
 
     [Fact]
-    public void Generates_Func_Statement()
+    public void Generates_Main_Func_Statement()
     {
         Assert.Equal(
             @"int main() {

@@ -1,5 +1,6 @@
 ﻿using SharpCompiler.AbstractSyntaxTree;
 using static SharpCompiler.Parser;
+using static SharpCompiler.Test.Parser.Util;
 
 namespace SharpCompiler.Test.Parser;
 
@@ -13,7 +14,7 @@ public class StatementTest
     [InlineData("_sharp_")]
     public void Accepts_Assignment(string id)
     {
-        var statement = Parse($"{id} = 1;");
+        var statement = GetSingleStatement(Parse($"void t() {{ {id} = 1; }}"));
 
         var assignment = Assert.IsType<AssignmentStatement>(statement);
 
@@ -23,7 +24,7 @@ public class StatementTest
     [Fact]
     public void Accepts_Print_Statement()
     {
-        var statement = Parse("print \"Hello World!\";");
+        var statement = GetSingleStatement(Parse("void t() { print \"Hello World!\"; }"));
 
         var printStatement = Assert.IsType<PrintStatement>(statement);
         var stringExpression = Assert.IsType<StringExpression>(printStatement.Expression);
@@ -34,7 +35,7 @@ public class StatementTest
     [Fact]
     public void Accepts_If_Statement()
     {
-        var statement = Parse("if (true) x = 30;");
+        var statement = GetSingleStatement(Parse("void t() { if (true) x = 30; }"));
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
         Assert.IsType<BooleanExpression>(ifStatement.Condition);
@@ -45,7 +46,7 @@ public class StatementTest
     [Fact]
     public void Accepts_If_With_Else_Statement()
     {
-        var statement = Parse("if (1 + 2 == 3) y = 1; else y = 2;");
+        var statement = GetSingleStatement(Parse("void t() { if (1 + 2 == 3) y = 1; else y = 2; }"));
 
         var ifStatement = Assert.IsType<IfStatement>(statement);
         Assert.IsType<BinaryExpression>(ifStatement.Condition);
@@ -56,7 +57,7 @@ public class StatementTest
     [Fact]
     public void Accepts_While_Statement()
     {
-        var statement = Parse("while (false) y = 2;");
+        var statement = GetSingleStatement(Parse("void t() { while (false) y = 2; }"));
 
         var whileStatement = Assert.IsType<WhileStatement>(statement);
         Assert.IsType<BooleanExpression>(whileStatement.Condition);
@@ -66,20 +67,20 @@ public class StatementTest
     [Fact]
     public void Accepts_Empty_Func()
     {
-        var statement = Parse("void empty() {}");
+        var statement = Parse("void t() {}");
 
         var funcStatement = Assert.IsType<FuncStatement>(statement);
-        Assert.Equal("empty", funcStatement.Name);
+        Assert.Equal("t", funcStatement.Name);
     }
 
     [Fact]
     public void Accepts_Func_With_Statements()
     {
-        var statement = Parse("void empty() { x = 1; y = 2; }");
+        var statement = Parse("void t() { x = 1; y = 2; }");
 
         var funcStatement = Assert.IsType<FuncStatement>(statement);
 
-        Assert.Equal("empty", funcStatement.Name);
+        Assert.Equal("t", funcStatement.Name);
         Assert.Equal(2, funcStatement.Children.Count);
 
         var xAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[0]);
@@ -93,7 +94,7 @@ public class StatementTest
     public void Accepts_Func_With_Statements_Two()
     {
         var statement = Parse(@"
-            void sample() {
+            void t() {
                 x = 0;
                 if (true) x = 2; else x = 1;
                 while (false) x = 0;
