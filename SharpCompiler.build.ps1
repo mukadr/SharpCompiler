@@ -5,6 +5,10 @@ task Clean {
     Remove-Item '.\**\obj\' -Recurse -Force -ErrorAction SilentlyContinue
 }
 
+task Test-XUnit {
+    Exec { dotnet test --no-build --verbosity normal }
+}
+
 task Test-Error-Messages {
     $SavedErrorActionPreference = $ErrorActionPreference
     Push-Location ".\shc"
@@ -43,11 +47,10 @@ task Test-Assertions {
     }
 }
 
-task Test Build, Test-Error-Messages, Test-Assertions
+task Test Build, Test-XUnit, Test-Error-Messages, Test-Assertions
 
 task Build {
     Exec { dotnet build }
-    Exec { dotnet test --no-build --verbosity normal }
 }
 
 task . Build
