@@ -8,6 +8,8 @@ void main()
 
     if (age == 33)
         print "You are Jesus Christ!";
+    else if (age * 10 == 90)
+        print "You are special!";
     else
         print "Sorry, you are a mere mortal, " + name + ".";
 }
