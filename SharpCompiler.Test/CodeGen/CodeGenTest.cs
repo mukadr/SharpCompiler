@@ -41,6 +41,15 @@ public class CodeGenTest
     }
 
     [Fact]
+    public void Generates_String_Concatenation()
+    {
+        Assert.Equal(
+            @"std::string a = (std::string(""a"") + std::string(""b""));
+",
+            Emit("a = \"a\" + \"b\";"));
+    }
+
+    [Fact]
     public void Generates_If_Statement()
     {
         Assert.Equal(

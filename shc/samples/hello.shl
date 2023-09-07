@@ -1,11 +1,13 @@
 void main()
 {
-    age = 0;
-    print "Hello! Tell me your age: ";
-    read age;
+    print "Hello! Tell me your name!";
+    name = ""; read name;
+
+    print "Thanks, " + name + ". Now tell me your age!";
+    age = 0; read age;
 
     if (age == 33)
         print "You are Jesus Christ!";
     else
-        print "Sorry, you are a mere mortal.";
+        print "Sorry, you are a mere mortal, " + name + ".";
 }

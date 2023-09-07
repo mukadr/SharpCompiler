@@ -186,9 +186,9 @@ public class CppCodeEmitter : INodeVisitor
 
     public void VisitStringExpression(StringExpression stringExpression)
     {
-        Emit("\"");
+        Emit("std::string(\"");
         Emit(stringExpression.Value);
-        Emit("\"");
+        Emit("\")");
     }
 
     public void VisitVariableExpression(VariableExpression variableExpression)
