@@ -5,9 +5,9 @@ using System.Threading;
 
 namespace SharpCompiler.Parser;
 
-public class SharpParser
+public static class SharpParser
 {
-    private static readonly Parser<Statement> StatementParser;
+    private static readonly Parser<Statement> _programParser;
 
     static SharpParser()
     {
@@ -101,17 +101,8 @@ public class SharpParser
             .Or(ifStatement)
             .Or(whileStatement));
 
-        StatementParser = SkipWhitespace.And(funcStatement);
+        _programParser = SkipWhitespace.And(funcStatement);
     }
 
-    public static Statement Parse(string sourceText) => new SharpParser(sourceText).Parse();
-
-    private readonly string _sourceText;
-
-    public SharpParser(string sourceText)
-    {
-        _sourceText = sourceText;
-    }
-
-    public Statement Parse() => StatementParser.ParseAllText(_sourceText);
+    public static Statement Parse(string sourceText) => _programParser.ParseAllText(sourceText);
 }
