@@ -6,10 +6,10 @@ public static class Util
 {
     internal static Statement GetSingleStatement(Statement function)
     {
-        var funcStatement = Assert.IsType<FuncStatement>(function);
+        var functionStatement = Assert.IsType<FunctionStatement>(function);
 
-        Assert.Single(funcStatement.Children);
+        Assert.Single(functionStatement.Children);
 
-        return funcStatement.Children[0];
+        return functionStatement.Children[0];
     }
 }

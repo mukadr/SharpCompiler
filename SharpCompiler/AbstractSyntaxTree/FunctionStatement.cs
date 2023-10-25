@@ -2,7 +2,7 @@
 
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class FuncStatement : Statement
+public class FunctionStatement : Statement
 {
     public SharpType ReturnType { get; }
 
@@ -10,7 +10,7 @@ public class FuncStatement : Statement
 
     public List<Statement> Children { get; }
 
-    public FuncStatement(string name, List<Statement> children)
+    public FunctionStatement(string name, List<Statement> children)
     {
         ReturnType = SharpType.Void;
         Name = name;
@@ -19,6 +19,6 @@ public class FuncStatement : Statement
 
     public override void Accept(INodeVisitor visitor)
     {
-        visitor.VisitFuncStatement(this);
+        visitor.VisitFunctionStatement(this);
     }
 }

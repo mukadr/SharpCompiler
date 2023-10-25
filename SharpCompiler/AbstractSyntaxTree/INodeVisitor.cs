@@ -3,7 +3,7 @@
 public interface INodeVisitor
 {
     void VisitAssignmentStatement(AssignmentStatement assignmentStatement);
-    void VisitFuncStatement(FuncStatement funcStatement);
+    void VisitFunctionStatement(FunctionStatement functionStatement);
     void VisitIfStatement(IfStatement ifStatement);
     void VisitWhileStatement(WhileStatement whileStatement);
     void VisitPrintStatement(PrintStatement printStatement);

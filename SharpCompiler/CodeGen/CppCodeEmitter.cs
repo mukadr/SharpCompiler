@@ -96,17 +96,17 @@ public class CppCodeEmitter : INodeVisitor
         EmitLine(");");
     }
 
-    public void VisitFuncStatement(FuncStatement funcStatement)
+    public void VisitFunctionStatement(FunctionStatement functionStatement)
     {
-        var returnType = funcStatement.Name == "main" ? "int" : funcStatement.ReturnType.ToCppType();
+        var returnType = functionStatement.Name == "main" ? "int" : functionStatement.ReturnType.ToCppType();
 
         Emit(returnType);
         Emit(" ");
-        Emit(funcStatement.Name);
+        Emit(functionStatement.Name);
         EmitLine("() {");
 
         _indentation++;
-        foreach (var child in funcStatement.Children)
+        foreach (var child in functionStatement.Children)
         {
             child.Accept(this);
         }

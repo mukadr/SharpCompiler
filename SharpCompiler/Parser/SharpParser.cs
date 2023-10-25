@@ -88,10 +88,10 @@ public static class SharpParser
         var whileStatement = @while.And(lparen.And(expression.Bind(e =>
             rparen.And(statement.Map<Statement>(s => new WhileStatement(e, s))))));
 
-        var funcStatement = @void.And(identifier.Bind(name =>
+        var functionStatement = @void.And(identifier.Bind(name =>
             lparen.And(rparen).And(lbrace.Bind(_ =>
                 ZeroOrMore(statement).Bind(children =>
-                    rbrace.Map<Statement>(_ => new FuncStatement(name.Value, children)))))));
+                    rbrace.Map<Statement>(_ => new FunctionStatement(name.Value, children)))))));
 
         statement.Attach(
             printStatement
@@ -101,7 +101,7 @@ public static class SharpParser
             .Or(ifStatement)
             .Or(whileStatement));
 
-        _programParser = SkipWhitespace.And(funcStatement);
+        _programParser = SkipWhitespace.And(functionStatement);
     }
 
     public static Statement Parse(string sourceText) => _programParser.ParseAllText(sourceText);

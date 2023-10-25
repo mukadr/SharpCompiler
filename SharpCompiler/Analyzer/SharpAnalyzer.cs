@@ -129,11 +129,11 @@ public class SharpAnalyzer : INodeVisitor
         binaryExpression.Type = TypeCheckBinaryExpression(binaryExpression.Left.Type, binaryExpression.Operator, binaryExpression.Right.Type);
     }
 
-    public void VisitFuncStatement(FuncStatement funcStatement)
+    public void VisitFunctionStatement(FunctionStatement functionStatement)
     {
         PushScope();
 
-        foreach (var child in funcStatement.Children)
+        foreach (var child in functionStatement.Children)
         {
             child.Accept(this);
         }

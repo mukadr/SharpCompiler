@@ -69,8 +69,8 @@ public class StatementTest
     {
         var statement = Parse("void t() {}");
 
-        var funcStatement = Assert.IsType<FuncStatement>(statement);
-        Assert.Equal("t", funcStatement.Name);
+        var functionStatement = Assert.IsType<FunctionStatement>(statement);
+        Assert.Equal("t", functionStatement.Name);
     }
 
     [Fact]
@@ -78,13 +78,13 @@ public class StatementTest
     {
         var statement = Parse("void t() { x = 1; y = 2; }");
 
-        var funcStatement = Assert.IsType<FuncStatement>(statement);
+        var functionStatement = Assert.IsType<FunctionStatement>(statement);
 
-        Assert.Equal("t", funcStatement.Name);
-        Assert.Equal(2, funcStatement.Children.Count);
+        Assert.Equal("t", functionStatement.Name);
+        Assert.Equal(2, functionStatement.Children.Count);
 
-        var xAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[0]);
-        var yAssignment = Assert.IsType<AssignmentStatement>(funcStatement.Children[1]);
+        var xAssignment = Assert.IsType<AssignmentStatement>(functionStatement.Children[0]);
+        var yAssignment = Assert.IsType<AssignmentStatement>(functionStatement.Children[1]);
 
         Assert.Equal("x", xAssignment.VariableName);
         Assert.Equal("y", yAssignment.VariableName);
@@ -100,8 +100,8 @@ public class StatementTest
                 while (false) x = 0;
             }");
 
-        var funcStatement = Assert.IsType<FuncStatement>(statement);
+        var functionStatement = Assert.IsType<FunctionStatement>(statement);
 
-        Assert.Equal(3, funcStatement.Children.Count);
+        Assert.Equal(3, functionStatement.Children.Count);
     }
 }
