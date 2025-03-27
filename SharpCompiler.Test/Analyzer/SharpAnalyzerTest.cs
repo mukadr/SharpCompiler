@@ -80,11 +80,16 @@ public class SharpAnalyzerTest
     [Fact]
     public void Can_Use_Declared_Variable()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = 10;
                 y = 2 * x;
-            }");
+            }
+            
+            """
+        );
 
         Analyze(program);
     }
@@ -92,10 +97,15 @@ public class SharpAnalyzerTest
     [Fact]
     public void Cannot_Use_Undeclared_Variable()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = y;
-            }");
+            }
+            
+            """
+        );
 
         Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
@@ -103,11 +113,16 @@ public class SharpAnalyzerTest
     [Fact]
     public void Can_Assign_Same_Type_To_Same_Variable_Twice()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = 10;
                 x = 20;
-            }");
+            }
+            
+            """
+        );
 
         Analyze(program);
     }
@@ -115,11 +130,16 @@ public class SharpAnalyzerTest
     [Fact]
     public void Cannot_Assign_Different_Types_To_Same_Variable()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = 10;
                 x = false;
-            }");
+            }
+            
+            """
+        );
 
         Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
@@ -127,11 +147,16 @@ public class SharpAnalyzerTest
     [Fact]
     public void Cannot_Assign_Different_Types_To_Same_Variable_In_Different_Scopes()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = 10;
                 if (true) x = false;
-            }");
+            }
+            
+            """
+        );
 
         Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
@@ -139,10 +164,15 @@ public class SharpAnalyzerTest
     [Fact]
     public void Cannot_Read_Undeclared_variable()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 read x;
-            }");
+            }           
+            
+            """
+        );
 
         Assert.ThrowsAny<CompileException>(() => Analyze(program));
     }
@@ -150,11 +180,16 @@ public class SharpAnalyzerTest
     [Fact]
     public void Can_Read_Declared_Variable()
     {
-        var program = Parse(@"
+        var program = Parse(
+            """
+            
             void variables() {
                 x = 10;
                 read x;
-            }");
+            }           
+            
+            """
+        );
 
         Analyze(program);
     }

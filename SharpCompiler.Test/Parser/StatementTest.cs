@@ -93,15 +93,21 @@ public class StatementTest
     [Fact]
     public void Accepts_Func_With_Statements_Two()
     {
-        var statement = Parse(@"
+        var statement = Parse(
+            """
+            
             void t() {
                 x = 0;
                 if (true) x = 2; else x = 1;
                 while (false) x = 0;
-            }");
+            }
+            
+            """
+        );
 
         var functionStatement = Assert.IsType<FunctionStatement>(statement);
 
         Assert.Equal(3, functionStatement.Children.Count);
     }
 }
+            

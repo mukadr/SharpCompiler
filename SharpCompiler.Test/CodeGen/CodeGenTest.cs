@@ -19,17 +19,20 @@ public class CodeGenTest
 
         Analyze(node);
 
-        return Emitter.Emit(node).ToString() ?? string.Empty;
+        return "\r\n" + Emitter.Emit(node).ToString() ?? string.Empty;
     }
 
     [Fact]
     public void Generates_Assignment()
     {
         Assert.Equal(
-            @"void t() {
-    int x = 1;
-}
-",
+            """
+
+            void t() {
+                int x = 1;
+            }
+
+            """,
             Emit("void t() { x = 1; }"));
     }
 
@@ -37,10 +40,13 @@ public class CodeGenTest
     public void Generates_BinaryExpression()
     {
         Assert.Equal(
-            @"void t() {
-    int x = (1 + (2 * 3));
-}
-",
+            """
+
+            void t() {
+                int x = (1 + (2 * 3));
+            }
+
+            """,
             Emit("void t() { x = 1 + 2 * 3; }"));
     }
 
@@ -48,10 +54,13 @@ public class CodeGenTest
     public void Generates_String_Concatenation()
     {
         Assert.Equal(
-            @"void t() {
-    std::string a = (std::string(""a"") + std::string(""b""));
-}
-",
+            """
+
+            void t() {
+                std::string a = (std::string("a") + std::string("b"));
+            }
+
+            """,
             Emit("void t() { a = \"a\" + \"b\"; }"));
     }
 
@@ -59,14 +68,17 @@ public class CodeGenTest
     public void Generates_If_Statement()
     {
         Assert.Equal(
-            @"void t() {
-    if (true) {
-        int x = 2;
-    } else {
-        int y = 3;
-    }
-}
-",
+            """
+
+            void t() {
+                if (true) {
+                    int x = 2;
+                } else {
+                    int y = 3;
+                }
+            }
+
+            """,
             Emit("void t() { if (true) x = 2; else y = 3; }"));
     }
 
@@ -74,12 +86,15 @@ public class CodeGenTest
     public void Generates_While_Statement()
     {
         Assert.Equal(
-            @"void t() {
-    while (true) {
-        int x = 2;
-    }
-}
-",
+            """
+
+            void t() {
+                while (true) {
+                    int x = 2;
+                }
+            }
+
+            """,
             Emit("void t() { while (true) x = 2; }"));
     }
 
@@ -87,17 +102,20 @@ public class CodeGenTest
     public void Generates_Main_Func_Statement()
     {
         Assert.Equal(
-            @"int main() {
-    int x = 1;
-    while (true) {
-        if (false) {
-            x = 4;
-        } else {
-            x = 5;
-        }
-    }
-}
-",
+            """
+
+            int main() {
+                int x = 1;
+                while (true) {
+                    if (false) {
+                        x = 4;
+                    } else {
+                        x = 5;
+                    }
+                }
+            }
+
+            """,
             Emit("void main() { x = 1; while (true) if (false) x = 4; else x = 5; }"));
     }
 }
