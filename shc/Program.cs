@@ -6,6 +6,7 @@ using static SharpCompiler.Parser.SharpParser;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 
 if (args.Length < 1)
 {
@@ -36,11 +37,13 @@ using (var writter = new StreamWriter(cppCodeFileName))
     emitter.Compile(program);
 }
 
+var isRunningOnWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
 var gcc = new Process
 {
     StartInfo = new ProcessStartInfo
     {
-        FileName = "g++",
+        FileName = isRunningOnWindows ? "g++.exe" : "g++",
         Arguments = $"{cppCodeFileName} -o {exeFileName} -w -O2",
         CreateNoWindow = true,
         RedirectStandardError = true
