@@ -2,9 +2,6 @@ using System;
 
 namespace SharpCompiler;
 
-public class CompileException : Exception
+public class CompileException(string message) : Exception(message)
 {
-    public CompileException(string message)
-        : base(message)
-    { }
 }

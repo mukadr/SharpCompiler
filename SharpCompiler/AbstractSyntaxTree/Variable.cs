@@ -1,16 +1,10 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public class Variable
+public class Variable(string name, SharpType type)
 {
-    public string Name { get; }
+    public string Name { get; } = name;
 
-    public SharpType Type { get; }
+    public SharpType Type { get; } = type;
 
     public bool Initialized = false;
-
-    public Variable(string name, SharpType type)
-    {
-        Name = name;
-        Type = type;
-    }
 }

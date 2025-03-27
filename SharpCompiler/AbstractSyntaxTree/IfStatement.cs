@@ -1,19 +1,12 @@
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class IfStatement : Statement
+public class IfStatement(Expression condition, Statement trueStatement, Statement? falseStatement) : Statement
 {
-    public Expression Condition { get; }
+    public Expression Condition { get; } = condition;
 
-    public Statement TrueStatement { get; }
+    public Statement TrueStatement { get; } = trueStatement;
 
-    public Statement? FalseStatement { get; }
-
-    public IfStatement(Expression condition, Statement trueStatement, Statement? falseStatement)
-    {
-        Condition = condition;
-        TrueStatement = trueStatement;
-        FalseStatement = falseStatement;
-    }
+    public Statement? FalseStatement { get; } = falseStatement;
 
     public override void Accept(INodeVisitor visitor)
     {

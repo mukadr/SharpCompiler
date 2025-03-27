@@ -4,16 +4,11 @@ using SharpCompiler.AbstractSyntaxTree;
 
 namespace SharpCompiler.Analyzer;
 
-public class Scope
+public class Scope(Scope? previousScope = null)
 {
     private IDictionary<string, Variable> Variables = new Dictionary<string, Variable>();
 
-    public Scope? PreviousScope { get; }
-
-    public Scope(Scope? previousScope = null)
-    {
-        PreviousScope = previousScope;
-    }
+    public Scope? PreviousScope { get; } = previousScope;
 
     public void Add(Variable v)
     {

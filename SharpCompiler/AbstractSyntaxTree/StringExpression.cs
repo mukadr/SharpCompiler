@@ -1,13 +1,8 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public class StringExpression : Expression
+public class StringExpression(string value) : Expression
 {
-    public string Value { get; }
-
-    public StringExpression(string value)
-    {
-        Value = value;
-    }
+    public string Value { get; } = value;
 
     public override void Accept(INodeVisitor visitor)
     {

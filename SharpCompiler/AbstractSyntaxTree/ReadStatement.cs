@@ -1,15 +1,10 @@
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class ReadStatement : Statement
+public class ReadStatement(VariableExpression variableExpression) : Statement
 {
-    public VariableExpression VariableExpression { get; }
+    public VariableExpression VariableExpression { get; } = variableExpression;
 
     public Variable? Variable { get; set; }
-
-    public ReadStatement(VariableExpression variableExpression)
-    {
-        VariableExpression = variableExpression;
-    }
 
     public override void Accept(INodeVisitor visitor)
     {

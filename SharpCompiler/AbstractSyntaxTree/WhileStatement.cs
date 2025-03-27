@@ -1,16 +1,10 @@
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class WhileStatement : Statement
+public class WhileStatement(Expression condition, Statement statement) : Statement
 {
-    public Expression Condition { get; }
+    public Expression Condition { get; } = condition;
 
-    public Statement Statement { get; }
-
-    public WhileStatement(Expression condition, Statement statement)
-    {
-        Condition = condition;
-        Statement = statement;
-    }
+    public Statement Statement { get; } = statement;
 
     public override void Accept(INodeVisitor visitor)
     {

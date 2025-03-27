@@ -2,20 +2,13 @@
 
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class FunctionStatement : Statement
+public class FunctionStatement(string name, List<Statement> children) : Statement
 {
-    public SharpType ReturnType { get; }
+    public SharpType ReturnType { get; } = SharpType.Void;
 
-    public string Name { get; }
+    public string Name { get; } = name;
 
-    public List<Statement> Children { get; }
-
-    public FunctionStatement(string name, List<Statement> children)
-    {
-        ReturnType = SharpType.Void;
-        Name = name;
-        Children = children;
-    }
+    public List<Statement> Children { get; } = children;
 
     public override void Accept(INodeVisitor visitor)
     {

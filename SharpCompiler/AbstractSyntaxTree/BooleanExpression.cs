@@ -1,13 +1,8 @@
 ﻿namespace SharpCompiler.AbstractSyntaxTree;
 
-public class BooleanExpression : Expression
+public class BooleanExpression(bool value) : Expression
 {
-    public bool Value { get; }
-
-    public BooleanExpression(bool value)
-    {
-        Value = value;
-    }
+    public bool Value { get; } = value;
 
     public override void Accept(INodeVisitor visitor)
     {

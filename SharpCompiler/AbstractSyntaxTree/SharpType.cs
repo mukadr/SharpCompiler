@@ -2,7 +2,7 @@
 
 namespace SharpCompiler.AbstractSyntaxTree;
 
-public class SharpType
+public class SharpType(SharpType.BaseType baseType)
 {
     public enum BaseType
     {
@@ -19,12 +19,7 @@ public class SharpType
     public static SharpType Integer = new SharpType(BaseType.Integer);
     public static SharpType String = new SharpType(BaseType.String);
 
-    public BaseType Base { get; }
-
-    public SharpType(BaseType baseType)
-    {
-        Base = baseType;
-    }
+    public BaseType Base { get; } = baseType;
 
     public string ToCppType()
     {

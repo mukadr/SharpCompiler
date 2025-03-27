@@ -4,16 +4,11 @@ using System.IO;
 
 namespace SharpCompiler.CodeGen;
 
-public class CppCodeEmitter : INodeVisitor
+public class CppCodeEmitter(TextWriter? writer = null) : INodeVisitor
 {
-    private TextWriter Writer { get; set; }
+    private TextWriter Writer { get; set; } = writer ?? Console.Out;
 
     private int _indentation = 0;
-
-    public CppCodeEmitter(TextWriter? writer = null)
-    {
-        Writer = writer ?? Console.Out;
-    }
 
     public TextWriter Compile(Node program)
     {
