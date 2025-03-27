@@ -6,7 +6,7 @@ and use C++ as a backend for efficient compilation.
 ## Prerequisites
 
 ### dotnet SDK
-Install dotnet SDK 7.0 (https://dotnet.microsoft.com)
+Install dotnet 9.0 SDK (https://dotnet.microsoft.com)
 
 ### Invoke-Build
 
