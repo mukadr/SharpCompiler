@@ -19,7 +19,7 @@ public class CodeGenTest
 
         Analyze(node);
 
-        return "\r\n" + Emitter.Emit(node).ToString() ?? string.Empty;
+        return Environment.NewLine + Emitter.Emit(node).ToString() ?? string.Empty;
     }
 
     [Fact]
